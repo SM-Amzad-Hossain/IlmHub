@@ -1,0 +1,157 @@
+/* ═══ 99 Names of Allah — the dial (clock) ═══ */
+:root{
+  --red:#ff3b30;
+  --red-soft:#ff9d94;
+  --bg:#040404;
+  --dial:min(92vw, 440px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);color:#fff;
+  font-family:'Oswald','Arial Narrow',sans-serif;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100svh;padding:26px 14px 40px;
+  -webkit-tap-highlight-color:transparent;overflow-x:hidden;
+}
+[data-lang="bn"] .lg-en{display:none !important}
+[data-lang="en"] .lg-bn{display:none !important}
+a{color:inherit;text-decoration:none}
+
+/* ─── header + stress ─── */
+.hd{width:min(100%,440px);text-align:center}
+.hd h1{
+  font-weight:700;font-size:clamp(26px,7vw,36px);
+  letter-spacing:.14em;line-height:1.1;
+}
+.stress-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  width:92%;margin:20px auto 7px;
+}
+.s-label{font-weight:600;letter-spacing:.22em;font-size:15px}
+.s-val{color:var(--red);font-weight:700;font-size:19px;font-style:italic}
+.bar{
+  position:relative;width:92%;height:26px;margin:0 auto;
+  border:2.5px solid var(--red);border-radius:7px;
+  background:#180404;overflow:hidden;
+}
+.fill{
+  position:absolute;left:0;top:0;bottom:0;width:100%;
+  background:linear-gradient(180deg,#ffb3aa,var(--red-soft));
+  transition:width .6s ease, background .6s ease;
+}
+.fill.zen{background:linear-gradient(180deg,#8ef0be,#3ddc84)}
+.segs{
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(to right,#040404 0 4px,transparent 4px 8.3333%);
+  pointer-events:none;
+}
+
+/* ─── dial ─── */
+.stage-wrap{margin-top:26px}
+.dial{
+  position:relative;width:var(--dial);aspect-ratio:1;
+  user-select:none;
+}
+.face{
+  position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 42%, #43284c 0%, #2b1730 42%, #170c1a 72%, #0b050d 100%);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 0 70px rgba(160,90,190,.22), inset 0 0 60px rgba(0,0,0,.55);
+}
+.ticks,.wheel{position:absolute;inset:0;border-radius:50%}
+.ticks{pointer-events:none}
+.tick{
+  position:absolute;left:50%;top:50%;width:2px;height:7px;
+  background:rgba(255,255,255,.9);border-radius:1px;
+  transform-origin:0 0;
+}
+.tick.long{height:11px;width:2.5px}
+
+.wheel{transition:transform 1.4s cubic-bezier(.12,.72,.15,1);cursor:pointer}
+.lbl{
+  position:absolute;left:50%;top:50%;
+  transform-origin:0 0;white-space:nowrap;
+  font-size:7.5px;font-weight:400;letter-spacing:.02em;
+  color:rgba(255,255,255,.92);
+  padding:1px 2px;cursor:pointer;
+  transition:color .2s, text-shadow .2s;
+}
+.lbl:hover{color:#ffd9d5;text-shadow:0 0 6px rgba(255,80,70,.8)}
+.lbl.on{color:#ff6a5e;text-shadow:0 0 7px rgba(255,59,48,.9);font-weight:600}
+
+/* red needle (fixed, 12 o'clock) */
+.needle{
+  position:absolute;left:50%;top:0;transform:translateX(-50%);
+  width:5px;height:8.5%;z-index:5;pointer-events:none;
+}
+.needle i{
+  display:block;width:100%;height:100%;
+  background:var(--red);border-radius:3px;
+  box-shadow:0 0 10px rgba(255,59,48,.8);
+}
+.needle::after{
+  content:'';position:absolute;left:50%;top:calc(100% + 5px);
+  transform:translateX(-50%);
+  width:7px;height:7px;border-radius:50%;
+  background:var(--red);box-shadow:0 0 8px rgba(255,59,48,.9);
+}
+
+/* centre core */
+.core{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:42%;aspect-ratio:1;border-radius:50%;z-index:6;
+  background:radial-gradient(circle at 50% 40%, #17101b, #07040a 75%);
+  border:1.5px solid rgba(255,255,255,.35);
+  cursor:pointer;display:grid;place-items:center;
+  transition:transform .2s, box-shadow .3s;
+  box-shadow:0 6px 30px rgba(0,0,0,.6);
+}
+.core:hover{box-shadow:0 0 26px rgba(255,120,110,.25)}
+.core:active{transform:translate(-50%,-50%) scale(.95)}
+.core .med{width:58%;height:auto}
+.core .wv{opacity:.25}
+.core.playing .wv1{animation:wv 1s ease-in-out infinite}
+.core.playing .wv2{animation:wv 1s ease-in-out .25s infinite}
+@keyframes wv{0%,100%{opacity:.15}50%{opacity:1}}
+.core-hint{
+  position:absolute;bottom:14%;left:0;right:0;
+  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);line-height:1.3;pointer-events:none;
+}
+.core.playing .core-hint{opacity:0}
+
+/* ─── name block ─── */
+.name-block{text-align:center;margin-top:30px;width:min(100%,460px)}
+.nm{
+  font-family:'Marcellus',serif;font-size:clamp(40px,11vw,54px);
+  line-height:1.05;letter-spacing:.01em;
+}
+.mn{font-weight:600;font-size:17px;letter-spacing:.06em;margin-top:10px}
+.mn-bn{font-family:'Hind Siliguri',sans-serif;font-size:14.5px;color:rgba(255,255,255,.65);margin-top:3px}
+.motto{
+  margin-top:14px;font-weight:600;font-size:11px;
+  letter-spacing:.3em;color:rgba(255,255,255,.85);
+}
+.links{
+  margin-top:22px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+  font-size:12.5px;letter-spacing:.06em;
+}
+.links a{
+  color:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.22);
+  padding:8px 14px;border-radius:99px;transition:.25s;
+}
+.links a:hover{color:#fff;border-color:var(--red);box-shadow:0 0 14px rgba(255,59,48,.35)}
+.hint{
+  margin-top:16px;font-family:'Hind Siliguri','Oswald',sans-serif;
+  font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.45);
+  max-width:340px;margin-left:auto;margin-right:auto;
+}
+@media (max-width:420px){
+  .lbl{font-size:6.4px}
+  .hd h1{letter-spacing:.1em}
+}
+@media (prefers-reduced-motion:reduce){
+  .wheel{transition-duration:.2s !important}
+}
