@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="bn" data-lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>৯৯ সুন্দর নাম · The 99 Beautiful Names of Allah</title>
+<meta name="description" content="আল্লাহর ৯৯টি সুন্দর নাম ও তাদের ধিকর — The 99 Beautiful Names of Allah and Their Dhikr. Cinematic narration, interactive names and tasbih counter." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ═══════════ TOP BAR ═══════════ -->
+<header class="topbar">
+  <a class="brand" href="#hero">
+    <span class="brand-mark">۞</span>
+    <span class="brand-text">
+      <b>ٱسْمَاءُ ٱللَّهِ ٱلْحُسْنَى</b>
+      <i class="lg-bn">সুন্দর ৯৯ নাম</i>
+      <i class="lg-en">The 99 Beautiful Names</i>
+    </span>
+  </a>
+
+  <!-- 🌐 translate button : বাংলা ⇄ English -->
+  <div class="lang-toggle" role="group" aria-label="Site language / ওয়েবসাইটের ভাষা">
+    <button type="button" data-ui="bn" class="active">বাংলা</button>
+    <button type="button" data-ui="en">EN</button>
+  </div>
+
+  <nav class="nav">
+    <a href="#cinematic">▶ <span class="lg-bn">সিনেমাটিক</span><span class="lg-en">Cinematic</span></a>
+    <a href="#names">﷽ <span class="lg-bn">নামসমূহ</span><span class="lg-en">Names</span></a>
+    <a href="#dhikr">◎ <span class="lg-bn">ধিকর</span><span class="lg-en">Dhikr</span></a>
+  </nav>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="stars" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="bismillah arabic">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+
+    <h1 class="hero-title">
+      <span class="hero-title-bn lg-bn">আল্লাহর ৯৯ সুন্দর নাম</span>
+      <span class="hero-title-en lg-en">The 99 Beautiful Names of Allah</span>
+    </h1>
+
+    <p class="hero-sub lg-bn">প্রতিটি নাম — রহমতের একটি দরজা, হৃদয়ের জন্য একটি আলো। শুনো, স্মরণ করো, প্রশান্তি খুঁজে নাও।</p>
+    <p class="hero-sub en lg-en">Every name is a doorway of mercy, a light for the heart. Listen, remember, and find your peace.</p>
+
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#cinematic" id="ctaWatch">▶ <span class="lg-bn">সিনেমাটিক দেখুন</span><span class="lg-en">Watch the cinematic</span></a>
+      <a class="btn btn-ghost" href="#names">﷽ <span class="lg-bn">নামগুলো দেখুন</span><span class="lg-en">Explore the names</span></a>
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">⌄</div>
+</section>
+
+<!-- ═══════════ CINEMATIC (recreated video + narration) ═══════════ -->
+<section id="cinematic" class="cine">
+  <div class="section-head">
+    <h2>
+      <span class="bn lg-bn">স্মরণের একটি যাত্রা</span>
+      <span class="en lg-en">A Journey of Remembrance</span>
+    </h2>
+    <p class="section-sub">
+      <span class="lg-bn">নিজে তৈরি ভিজ্যুয়াল ও কণ্ঠস্বরে — চালিয়ে দেখুন</span>
+      <span class="lg-en">Original visuals with narration — press play</span>
+    </p>
+  </div>
+
+  <div class="player" id="player">
+    <!-- STAGE: layered scenes = the recreated “video” -->
+    <div class="stage" id="stage">
+
+      <!-- Scene 0 : cover -->
+      <div class="scene scene-cover active" data-scene="0">
+        <div class="scene-bg bg-hero"></div>
+        <div class="cover-content">
+          <div class="ornament-ring" aria-hidden="true">
+            <svg viewBox="0 0 200 200" class="star-rotate">
+              <g fill="none" stroke="currentColor" stroke-width="1.4">
+                <rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/>
+                <rect x="45" y="45" width="110" height="110"/>
+                <circle cx="100" cy="100" r="72"/>
+                <circle cx="100" cy="100" r="58"/>
+              </g>
+            </svg>
+            <span class="cover-99">৯৯</span>
+          </div>
+          <p class="cover-title arabic">أَسْمَاءُ ٱللَّهِ ٱلْحُسْنَىٰ</p>
+          <p class="cover-hint lg-bn">শুরু করতে চাপুন</p>
+          <p class="cover-hint en lg-en">Press to begin</p>
+          <button class="play-big" id="btnStart" aria-label="Play cinematic">▶</button>
+        </div>
+      </div>
+
+      <!-- Scene 1 : intro -->
+      <div class="scene" data-scene="1">
+        <div class="scene-bg bg-hero"></div>
+        <div class="scene-shade"></div>
+        <div class="scene-mid">
+          <p class="glow-arabic arabic" data-fx="fx1">بِسْمِ ٱللَّهِ</p>
+          <p class="scene-big" data-fx="fx1">৯৯</p>
+          <p class="scene-line" data-fx="fx1">
+            <span class="bn">রহমতের দরজা, হৃদয়ের আলো</span>
+            <span class="en">Doorways of mercy, light for the heart</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Scene 2 : the names -->
+      <div class="scene" data-scene="2">
+        <div class="scene-bg bg-scene"></div>
+        <div class="scene-shade"></div>
+        <div class="names-reveal">
+          <div class="reveal-card" data-stagger="1">
+            <span class="arabic">ٱلرَّحْمَٰنُ</span><b>Ar-Rahmān</b>
+            <i class="bn">পরম করুণাময়</i><i class="en">The Most Gracious</i>
+          </div>
+          <div class="reveal-card" data-stagger="2">
+            <span class="arabic">ٱلرَّحِيمُ</span><b>Ar-Rahīm</b>
+            <i class="bn">অতি দয়ালু</i><i class="en">The Most Merciful</i>
+          </div>
+          <div class="reveal-card" data-stagger="3">
+            <span class="arabic">ٱلْمَلِكُ</span><b>Al-Malik</b>
+            <i class="bn">সার্বভৌম রাজা</i><i class="en">The King of all</i>
+          </div>
+          <div class="reveal-card" data-stagger="4">
+            <span class="arabic">ٱلْقُدُّوسُ</span><b>Al-Quddūs</b>
+            <i class="bn">পবিত্রতম</i><i class="en">The Pure, the Holy</i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 : dhikr -->
+      <div class="scene" data-scene="3">
+        <div class="scene-bg bg-tasbih"></div>
+        <div class="scene-shade"></div>
+        <div class="dhikr-stage">
+          <div class="bead-orbit" aria-hidden="true">
+            <svg viewBox="0 0 240 240">
+              <g fill="currentColor">
+                <circle cx="120" cy="20" r="7"/><circle cx="180" cy="40" r="7"/>
+                <circle cx="220" cy="100" r="7"/><circle cx="200" cy="170" r="7"/>
+                <circle cx="150" cy="215" r="7"/><circle cx="90" cy="220" r="7"/>
+                <circle cx="40" cy="185" r="7"/><circle cx="20" cy="120" r="7"/>
+                <circle cx="35" cy="60" r="7"/><circle cx="75" cy="28" r="7"/>
+              </g>
+              <circle cx="120" cy="120" r="95" fill="none" stroke="currentColor" stroke-width="1" opacity=".45"/>
+            </svg>
+          </div>
+          <p class="dhikr-word arabic" data-d="0">سُبْحَانَ ٱللَّهِ</p>
+          <p class="dhikr-word arabic" data-d="1">ٱلْحَمْدُ لِلَّهِ</p>
+          <p class="dhikr-word arabic" data-d="2">ٱللَّهُ أَكْبَرُ</p>
+        </div>
+      </div>
+
+      <!-- Scene 4 : end card -->
+      <div class="scene" data-scene="4">
+        <div class="scene-bg bg-hero dim"></div>
+        <div class="end-card">
+          <p class="arabic end-arabic">سُبْحَانَ ٱللَّهِ وَبِٱلْحَمْدِ</p>
+          <p class="end-line bn">প্রতিটি নামই তোমার সঙ্গী</p>
+          <p class="end-line en">Every name is your companion</p>
+          <div class="end-actions">
+            <button class="btn btn-gold" id="btnReplay">↻ <span class="lg-bn">আবার দেখুন</span><span class="lg-en">Replay</span></button>
+            <a class="btn btn-ghost" href="#names">﷽ <span class="lg-bn">৯৯ নাম</span><span class="lg-en">The 99 names</span></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- caption strip (always bilingual — follows the narration) -->
+      <div class="caption" id="caption">
+        <p class="cap-bn" id="capBn"></p>
+        <p class="cap-en" id="capEn"></p>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button class="ctrl-btn" id="btnPlay" aria-label="Play / Pause">▶</button>
+
+      <div class="progress-wrap">
+        <div class="progress-track" id="progressTrack">
+          <div class="progress-fill" id="progressFill"></div>
+          <div class="seg-marks"><i></i><i></i><i></i></div>
+        </div>
+        <div class="progress-meta">
+          <span id="sceneLabel">প্রস্তুত</span>
+          <span class="lang-switch" role="group" aria-label="Narration language">
+            <button class="lang-btn active" data-lang="bn">বাংলা</button>
+            <button class="lang-btn" data-lang="en">English</button>
+          </span>
+          <button class="ctrl-btn small" id="btnMute" aria-label="Mute">🔊</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="cine-note">
+      <span class="lg-bn">ভিজ্যুয়াল ও কণ্ঠস্বর এখানেই তৈরি — মূল শর্ট থেকে অনুপ্রাণিত।</span>
+      <span class="lg-en">Visuals &amp; narration produced for this site, inspired by the original short.</span>
+      <a href="https://www.youtube.com/shorts/p5A0nzqJogA" target="_blank" rel="noopener">source ↗</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════ 99 NAMES ═══════════ -->
+<section id="names" class="names-section">
+  <div class="section-head">
+    <h2>
+      <span class="bn lg-bn">নিরানব্বইটি নাম</span>
+      <span class="en lg-en">The Ninety-Nine Names</span>
+    </h2>
+    <p class="section-sub">
+      <span class="lg-bn">চাপুন — নামটি উচ্চারিত হবে, অর্থ দেখা যাবে</span>
+      <span class="lg-en">Tap any card — the name is pronounced and explained</span>
+    </p>
+  </div>
+
+  <div class="names-tools">
+    <input id="search" type="search" placeholder="খুঁজুন…  যেমন: রহমান / Rahman / merciful" autocomplete="off" />
+    <div class="filters">
+      <button class="chip active" data-filter="all"><span class="lg-bn">সব</span><i class="lg-en">All</i></button>
+      <button class="chip" data-filter="fav"><span class="lg-bn">পছন্দের</span><i class="lg-en">Favourites</i></button>
+    </div>
+  </div>
+
+  <!-- 🔊 listen to all 99 names, one by one -->
+  <div class="listen-all">
+    <button class="btn btn-gold btn-sm" id="btnPlayAll">▶ <span class="lg-bn">সব ৯৯ নাম শুনুন</span><span class="lg-en">Listen to all 99 names</span></button>
+    <span class="play-all-now" id="playAllNow" aria-live="polite"></span>
+    <button class="btn btn-ghost btn-sm" id="btnStopAll" hidden>■ <span class="lg-bn">থামুন</span><span class="lg-en">Stop</span></button>
+  </div>
+
+  <div class="names-grid" id="namesGrid"><!-- cards injected by app.js --></div>
+  <p class="grid-empty" id="gridEmpty" hidden>
+    <span class="lg-bn">কোনো নাম পাওয়া যায়নি</span>
+    <span class="lg-en">No names found</span>
+  </p>
+</section>
+
+<!-- ═══════════ NAME MODAL ═══════════ -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-back" data-close></div>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" data-close aria-label="Close">×</button>
+    <span class="m-num" id="mNum">নাম ১</span>
+    <p class="m-arabic arabic" id="mArabic"></p>
+    <h3 class="m-trans" id="mTrans"></h3>
+    <p class="m-bn lg-bn" id="mBn"></p>
+    <p class="m-en lg-en" id="mEn"></p>
+    <div class="m-actions">
+      <button class="btn btn-gold btn-sm" id="mSpeak">🔊 <span class="lg-bn">আবার শুনুন</span><span class="lg-en">Say it again</span></button>
+      <button class="btn btn-ghost btn-sm" id="mFav">☆ <span class="lg-bn">পছন্দের</span><span class="lg-en">Favourite</span></button>
+    </div>
+    <p class="m-dhikr">
+      <span class="lg-bn">ধিকর: এই নামটি স্মরণ করুন — সকালে ৩৩ বার, বিকালে ৩৩ বার।</span>
+      <span class="lg-en">Dhikr: remember this name — 33× at dawn, 33× at dusk.</span>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════ DHIKR / TASBIH ═══════════ -->
+<section id="dhikr" class="dhikr-section">
+  <div class="section-head">
+    <h2>
+      <span class="bn lg-bn">ধিকর · তসবিহ</span>
+      <span class="en lg-en">Dhikr Counter</span>
+    </h2>
+    <p class="section-sub">
+      <span class="lg-bn">প্রতিটি ট্যাপে নিখুঁত শব্দ, প্রতিটি লক্ষ্য পূর্ণে মধুর সুর</span>
+      <span class="lg-en">A soft tick with every tap, a chime at every goal</span>
+    </p>
+  </div>
+
+  <div class="tasbih-card">
+    <div class="tasbih-visual">
+      <img src="assets/img/tasbih.jpg" alt="Prayer beads on a rug" />
+      <div class="dhikr-phrase-box">
+        <p class="arabic" id="phraseAr">سُبْحَانَ ٱللَّهِ</p>
+        <p class="phrase-tr" id="phraseTr">Subhānallāh</p>
+        <p class="phrase-bn" id="phraseBn">আল্লাহ পবিত্র</p>
+        <button class="btn btn-ghost btn-sm" id="btnPhrase">▶ <span class="lg-bn">শুনুন</span><span class="lg-en">Hear it</span></button>
+      </div>
+      <div class="phrase-picker" id="phrasePicker"><!-- chips injected --></div>
+    </div>
+
+    <div class="tasbih-counter">
+      <div class="ring" id="ring">
+        <svg viewBox="0 0 220 220">
+          <circle class="ring-bg" cx="110" cy="110" r="98"/>
+          <circle class="ring-fill" id="ringFill" cx="110" cy="110" r="98"/>
+        </svg>
+        <button class="tap-area" id="tapArea">
+          <span class="count" id="count">০</span>
+          <span class="tap-label"><span class="lg-bn">ট্যাপ করুন</span><span class="lg-en">Tap</span></span>
+        </button>
+      </div>
+
+      <div class="target-row" id="targetRow">
+        <button class="chip active" data-target="33">৩৩</button>
+        <button class="chip" data-target="99">৯৯</button>
+        <button class="chip" data-target="100">১০০</button>
+        <button class="chip" data-target="1000">১০০০</button>
+      </div>
+
+      <div class="counter-meta">
+        <span><span class="lg-bn">অর্জিত</span><span class="lg-en">Completed</span>: <b id="laps">০</b></span>
+        <button class="btn btn-ghost btn-sm" id="btnReset">↺ <span class="lg-bn">রিসেট</span><span class="lg-en">Reset</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <p class="arabic dua-ar">ٱللَّهُمَّ صَلِّ وَسَلِّمْ عَلَىٰ نَبِيِّنَا مُحَمَّدٍ</p>
+  <p class="dua bn lg-bn">হে আল্লাহ, আমাদের নবী মুহাম্মাদের উপর রহমত ও শান্তি বর্ষণ করুন।</p>
+  <p class="dua en lg-en">O Allah, send Your blessings and peace upon our Prophet Muhammad.</p>
+  <p class="foot-note">
+    <span class="lg-bn">৯৯ নামের তালিকা ও অর্থ প্রচলিত ইসলামি সূত্র অনুসারে।</span>
+    <span class="lg-en">List &amp; meanings follow the traditional Islamic sources.</span>
+  </p>
+  <p class="foot-credit">۞ <span class="lg-bn">নির্মাণ</span><span class="lg-en">Built</span> with care · 2026</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
