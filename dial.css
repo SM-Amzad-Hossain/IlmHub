@@ -1,9 +1,12 @@
-/* ═══ 99 Names of Allah — the dial (clock) ═══ */
+/* ═══ 99 Names of Allah — the dial (clock) ═══
+   Design matched to reference: black bg, segmented STRESS bar,
+   metallic purple rim, radial 99-name ring, twin red needles. */
 :root{
   --red:#ff3b30;
   --red-soft:#ff9d94;
+  --pink:#f6c9c2;
   --bg:#040404;
-  --dial:min(92vw, 440px);
+  --dial:min(90vw, 58svh, 520px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%}
@@ -11,40 +14,43 @@ body{
   background:var(--bg);color:#fff;
   font-family:'Oswald','Arial Narrow',sans-serif;
   display:flex;flex-direction:column;align-items:center;
-  min-height:100svh;padding:26px 14px 40px;
+  min-height:100svh;padding:10px 14px 36px;
   -webkit-tap-highlight-color:transparent;overflow-x:hidden;
 }
 [data-lang="bn"] .lg-en{display:none !important}
 [data-lang="en"] .lg-bn{display:none !important}
 a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none}
 
 /* ─── header + stress ─── */
 .hd{width:min(100%,440px);text-align:center}
 .hd h1{
-  font-weight:700;font-size:clamp(26px,7vw,36px);
-  letter-spacing:.14em;line-height:1.1;
+  font-weight:700;font-size:clamp(24px,6vw,34px);
+  letter-spacing:.15em;line-height:1.1;
 }
 .stress-row{
   display:flex;justify-content:space-between;align-items:baseline;
-  width:92%;margin:20px auto 7px;
+  width:min(55vw,280px);margin:10px auto 0;
 }
-.s-label{font-weight:600;letter-spacing:.22em;font-size:15px}
-.s-val{color:var(--red);font-weight:700;font-size:19px;font-style:italic}
+.s-label{font-weight:600;letter-spacing:.24em;font-size:13px}
+.s-val{color:var(--red);font-weight:700;font-size:17px;font-style:italic}
 .bar{
-  position:relative;width:92%;height:26px;margin:0 auto;
-  border:2.5px solid var(--red);border-radius:7px;
-  background:#180404;overflow:hidden;
+  position:relative;width:min(55vw,280px);height:19px;margin:0 auto;
+  border:2px solid #e85d5d;border-radius:5px;
+  background:#1a0606;overflow:hidden;
 }
 .fill{
   position:absolute;left:0;top:0;bottom:0;width:100%;
-  background:linear-gradient(180deg,#ffb3aa,var(--red-soft));
+  background:linear-gradient(180deg,#fde8e3,var(--pink) 55%,#eaa79d);
   transition:width .6s ease, background .6s ease;
 }
-.fill.zen{background:linear-gradient(180deg,#8ef0be,#3ddc84)}
+.fill.zen{background:linear-gradient(180deg,#c9f5dd,#7fe3ae 55%,#4cc98a)}
 .segs{
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(to right,#040404 0 4px,transparent 4px 8.3333%);
-  pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    to right, transparent 0 calc(10% - 2px),
+    #090608 calc(10% - 2px) 10%
+  );
 }
 
 /* ─── dial ─── */
@@ -53,89 +59,122 @@ a{color:inherit;text-decoration:none}
   position:relative;width:var(--dial);aspect-ratio:1;
   user-select:none;
 }
-.face{
+/* metallic purple outer rim (like the reference photo) */
+.rim{
   position:absolute;inset:0;border-radius:50%;
   background:
-    radial-gradient(circle at 50% 42%, #43284c 0%, #2b1730 42%, #170c1a 72%, #0b050d 100%);
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 0 70px rgba(160,90,190,.22), inset 0 0 60px rgba(0,0,0,.55);
+    conic-gradient(from 210deg,
+      #a17eae 0deg, #5d3b69 55deg, #9273a3 110deg,
+      #4a2b52 170deg, #82638f 230deg, #392341 290deg,
+      #8c6b9d 340deg, #a17eae 360deg);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.28),
+    0 0 46px rgba(150,90,180,.28),
+    inset 0 0 10px rgba(0,0,0,.55);
 }
-.ticks,.wheel{position:absolute;inset:0;border-radius:50%}
+.face{
+  position:absolute;inset:1.8%;border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 50%, #4b2d55 0%, #3a2142 46%, #241430 78%, #150a18 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.14),
+    inset 0 0 46px rgba(0,0,0,.6);
+}
+.ticks,.wheel{position:absolute;inset:1.8%;border-radius:50%}
 .ticks{pointer-events:none}
 .tick{
-  position:absolute;left:50%;top:50%;width:2px;height:7px;
-  background:rgba(255,255,255,.9);border-radius:1px;
+  position:absolute;left:50%;top:50%;width:2px;height:6px;
+  background:rgba(255,255,255,.92);border-radius:1px;
   transform-origin:0 0;
 }
-.tick.long{height:11px;width:2.5px}
+.tick.long{height:9px;width:2.5px}
 
 .wheel{transition:transform 1.4s cubic-bezier(.12,.72,.15,1);cursor:pointer}
+/* names run RADIALLY (along the radius), two staggered rows — as in the reference */
 .lbl{
   position:absolute;left:50%;top:50%;
   transform-origin:0 0;white-space:nowrap;
-  font-size:7.5px;font-weight:400;letter-spacing:.02em;
-  color:rgba(255,255,255,.92);
-  padding:1px 2px;cursor:pointer;
+  font-size:clamp(5px,1.55vw,8px);
+  font-weight:400;letter-spacing:.01em;line-height:1;
+  color:rgba(255,255,255,.94);
+  padding:0;cursor:pointer;
   transition:color .2s, text-shadow .2s;
 }
 .lbl:hover{color:#ffd9d5;text-shadow:0 0 6px rgba(255,80,70,.8)}
-.lbl.on{color:#ff6a5e;text-shadow:0 0 7px rgba(255,59,48,.9);font-weight:600}
+.lbl.on{color:#ff5a4e;text-shadow:0 0 8px rgba(255,59,48,.95);font-weight:600}
+.lbl:focus-visible,.core:focus-visible,.links a:focus-visible{
+  outline:2px solid var(--pink);outline-offset:3px;
+}
 
-/* red needle (fixed, 12 o'clock) */
+/* outer red needle — fixed at 12 o'clock, reaches into the name ring */
 .needle{
-  position:absolute;left:50%;top:0;transform:translateX(-50%);
-  width:5px;height:8.5%;z-index:5;pointer-events:none;
+  position:absolute;left:50%;top:2%;transform:translateX(-50%);
+  width:clamp(4px,1.1vw,6px);height:9.5%;z-index:5;pointer-events:none;
 }
 .needle i{
   display:block;width:100%;height:100%;
-  background:var(--red);border-radius:3px;
-  box-shadow:0 0 10px rgba(255,59,48,.8);
-}
-.needle::after{
-  content:'';position:absolute;left:50%;top:calc(100% + 5px);
-  transform:translateX(-50%);
-  width:7px;height:7px;border-radius:50%;
-  background:var(--red);box-shadow:0 0 8px rgba(255,59,48,.9);
+  background:linear-gradient(180deg,#ff7a6e,var(--red) 60%,#d81f14);
+  border-radius:3px;
+  box-shadow:0 0 10px rgba(255,59,48,.9), 0 0 22px rgba(255,59,48,.45);
 }
 
 /* centre core */
 .core{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:42%;aspect-ratio:1;border-radius:50%;z-index:6;
-  background:radial-gradient(circle at 50% 40%, #17101b, #07040a 75%);
-  border:1.5px solid rgba(255,255,255,.35);
+  width:29%;aspect-ratio:1;border-radius:50%;z-index:6;
+  background:radial-gradient(circle at 50% 42%, #1c1220, #08040b 78%);
+  border:1.5px solid rgba(255,255,255,.5);
   cursor:pointer;display:grid;place-items:center;
   transition:transform .2s, box-shadow .3s;
-  box-shadow:0 6px 30px rgba(0,0,0,.6);
+  box-shadow:0 6px 30px rgba(0,0,0,.65), inset 0 0 24px rgba(0,0,0,.7);
 }
-.core:hover{box-shadow:0 0 26px rgba(255,120,110,.25)}
+.core:hover{box-shadow:0 0 26px rgba(255,120,110,.25), inset 0 0 24px rgba(0,0,0,.7)}
 .core:active{transform:translate(-50%,-50%) scale(.95)}
-.core .med{width:58%;height:auto}
+.core .med{width:60%;height:auto;margin-top:4%}
 .core .wv{opacity:.25}
 .core.playing .wv1{animation:wv 1s ease-in-out infinite}
 .core.playing .wv2{animation:wv 1s ease-in-out .25s infinite}
 @keyframes wv{0%,100%{opacity:.15}50%{opacity:1}}
-.core-hint{
-  position:absolute;bottom:14%;left:0;right:0;
-  font-size:8px;letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(255,255,255,.55);line-height:1.3;pointer-events:none;
+/* inner red hand points from the centre hub toward the top of the clock */
+.inner-needle{
+  position:absolute;left:50%;top:28%;transform:translateX(-50%);
+  width:clamp(4px,1vw,6px);height:7.5%;z-index:5;pointer-events:none;
 }
+.inner-needle i{
+  display:block;width:100%;height:100%;
+  background:linear-gradient(180deg,#ff7a6e,var(--red) 60%,#d81f14);
+  border-radius:4px;
+  box-shadow:0 0 9px rgba(255,59,48,.95),0 0 18px rgba(255,59,48,.35);
+}
+.core-hint{display:none}
 .core.playing .core-hint{opacity:0}
 
 /* ─── name block ─── */
-.name-block{text-align:center;margin-top:30px;width:min(100%,460px)}
+.name-block{text-align:center;margin-top:28px;width:min(100%,520px)}
 .nm{
-  font-family:'Marcellus',serif;font-size:clamp(40px,11vw,54px);
+  font-family:'Marcellus',serif;font-size:clamp(38px,10vw,50px);
   line-height:1.05;letter-spacing:.01em;
 }
-.mn{font-weight:600;font-size:17px;letter-spacing:.06em;margin-top:10px}
-.mn-bn{font-family:'Hind Siliguri',sans-serif;font-size:14.5px;color:rgba(255,255,255,.65);margin-top:3px}
+.mn{font-weight:600;font-size:16px;letter-spacing:.05em;margin-top:8px}
+.mn-bn{display:none}
 .motto{
-  margin-top:14px;font-weight:600;font-size:11px;
-  letter-spacing:.3em;color:rgba(255,255,255,.85);
+  margin-top:12px;font-weight:600;font-size:11px;
+  letter-spacing:.32em;color:rgba(255,255,255,.88);
 }
+.auto-controls{display:grid;justify-items:center;gap:6px;margin-top:16px}
+.auto-play{
+  min-height:38px;padding:8px 18px;border:1px solid rgba(246,201,194,.75);
+  border-radius:999px;background:linear-gradient(180deg,rgba(111,72,119,.46),rgba(37,20,43,.64));
+  color:#fff;font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+  cursor:pointer;box-shadow:0 0 18px rgba(145,95,158,.16);
+  transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;
+}
+.auto-play:hover{border-color:var(--pink);box-shadow:0 0 18px rgba(255,120,110,.3)}
+.auto-play:active{transform:scale(.97)}
+.auto-play[aria-pressed="true"]{border-color:var(--red-soft);background:rgba(120,27,34,.48)}
+.auto-status{min-height:14px;color:rgba(255,255,255,.48);font-size:10px;letter-spacing:.06em}
 .links{
-  margin-top:22px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;
+  margin-top:20px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
   font-size:12.5px;letter-spacing:.06em;
 }
 .links a{
@@ -144,12 +183,11 @@ a{color:inherit;text-decoration:none}
 }
 .links a:hover{color:#fff;border-color:var(--red);box-shadow:0 0 14px rgba(255,59,48,.35)}
 .hint{
-  margin-top:16px;font-family:'Hind Siliguri','Oswald',sans-serif;
+  margin-top:14px;font-family:'Hind Siliguri','Oswald',sans-serif;
   font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.45);
   max-width:340px;margin-left:auto;margin-right:auto;
 }
 @media (max-width:420px){
-  .lbl{font-size:6.4px}
   .hd h1{letter-spacing:.1em}
 }
 @media (prefers-reduced-motion:reduce){
