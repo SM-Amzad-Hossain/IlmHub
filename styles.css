@@ -530,6 +530,13 @@ section{position:relative}
 }
 .voice-toggle button:hover{color:var(--gold)}
 .voice-toggle button.active{background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#241a05}
+.voice-source-link{
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:12px;line-height:1.35;text-align:center;
+  text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;
+  transition:color .2s;
+}
+.voice-source-link:hover,.voice-source-link:focus-visible{color:var(--gold)}
 
 /* language visibility */
 [data-lang="bn"] .lg-en{display:none !important}
