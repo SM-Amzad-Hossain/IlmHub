@@ -13,14 +13,14 @@
 <body>
 
 <nav class="site-nav" aria-label="সাইট নেভিগেশন">
-  <div class="lang-toggle" role="group" aria-label="ওয়েবসাইটের ভাষা">
-    <button type="button" data-ui="bn" class="active">বাংলা</button>
-    <button type="button" data-ui="en">EN</button>
-  </div>
   <a class="home-link" href="index.html">
     <span class="lg-bn">← মূল সাইট</span>
     <span class="lg-en">← Main site</span>
   </a>
+  <div class="lang-toggle" role="group" aria-label="ওয়েবসাইটের ভাষা">
+    <button type="button" data-ui="bn" class="active">বাংলা</button>
+    <button type="button" data-ui="en">EN</button>
+  </div>
 </nav>
 
 <header class="hd">
@@ -53,6 +53,10 @@
 <section class="name-block">
   <div class="motto"><span class="lg-bn">মনে মনে উচ্চারণ করুন</span><span class="lg-en">SAY IT IN YOUR HEART</span></div>
   <div class="auto-controls">
+    <div class="voice-toggle" role="group" aria-label="আরবি নামের কণ্ঠস্বর">
+      <button type="button" data-voice="male" aria-pressed="true"><span aria-hidden="true">♂</span> <span class="lg-bn">পুরুষ</span><span class="lg-en">Male</span></button>
+      <button type="button" data-voice="female" aria-pressed="false"><span aria-hidden="true">♀</span> <span class="lg-bn">নারী</span><span class="lg-en">Female</span></button>
+    </div>
     <button class="auto-play" id="autoPlayBtn" type="button" aria-pressed="false">▶ ৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন</button>
     <p class="auto-status" id="autoStatus" role="status" aria-live="polite">নির্বাচিত নাম থেকে শুরু হবে</p>
   </div>
