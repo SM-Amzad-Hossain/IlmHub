@@ -643,7 +643,7 @@ function applyLang() {
   document.title = localize('৯৯ সুন্দর নাম · আল্লাহর নামের জিকির', 'The 99 Beautiful Names of Allah');
   $('#pageDescription').content = localize(
     'আল্লাহর ৯৯টি সুন্দর নাম, বাংলা অর্থ, জিকির ও তসবিহ কাউন্টার।',
-    'Explore the 99 Beautiful Names of Allah with meanings, dhikr and a tasbih counter.'
+    'Explore the 99 Beautiful Names of Allah with meanings, zikr and a tasbih counter.'
   );
   CINE.lang = LANG;
   $$('.lang-toggle').forEach(group => group.setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language')));
@@ -654,7 +654,7 @@ function applyLang() {
     'Search… e.g. Rahman / mercy / রহমান'
   );
   $$('#targetRow .chip').forEach(c => { c.textContent = fmt(+c.dataset.target); });
-  $('#tapArea').setAttribute('aria-label', localize('তসবিহ গণনা করুন', 'Count a dhikr'));
+  $('#tapArea').setAttribute('aria-label', localize('তসবিহ গণনা করুন', 'Count zikr repetitions'));
   $('img[alt]').alt = localize('প্রার্থনার জপমালা', 'Prayer beads');
   $('#modal .modal-close').setAttribute('aria-label', localize('বন্ধ করুন', 'Close'));
   syncCineControls();
