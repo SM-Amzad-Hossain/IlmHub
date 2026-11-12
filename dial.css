@@ -39,6 +39,16 @@ html[data-lang="bn"] body{font-family:'Hind Siliguri',sans-serif}
 }
 .lang-toggle button:hover{color:#fff}
 .lang-toggle button.active{color:#1e1111;background:linear-gradient(135deg,#f6c9c2,#d79b93)}
+.voice-toggle{
+  display:flex;gap:2px;padding:3px;border:1px solid rgba(246,201,194,.28);
+  border-radius:99px;background:rgba(255,255,255,.05);
+}
+.voice-toggle button{
+  padding:6px 12px;border-radius:99px;color:rgba(255,255,255,.66);
+  font-size:11px;font-weight:600;cursor:pointer;transition:.2s;
+}
+.voice-toggle button:hover{color:#fff}
+.voice-toggle button.active{color:#1e1111;background:linear-gradient(135deg,#f6c9c2,#d79b93)}
 .home-link{
   border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:7px 13px;
   color:rgba(255,255,255,.72);font-size:12px;letter-spacing:.03em;transition:.2s;

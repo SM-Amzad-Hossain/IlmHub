@@ -14,12 +14,6 @@
 
 <!-- ═══════════ TOP BAR ═══════════ -->
 <header class="topbar">
-  <!-- 🌐 language control stays at the far left -->
-  <div class="lang-toggle" role="group" aria-label="Site language / ওয়েবসাইটের ভাষা">
-    <button type="button" data-ui="bn" class="active">বাংলা</button>
-    <button type="button" data-ui="en">EN</button>
-  </div>
-
   <a class="brand" href="#hero">
     <span class="brand-mark">۞</span>
     <span class="brand-text">
@@ -35,6 +29,11 @@
     <a href="#dhikr">◎ <span class="lg-bn">ধিকর</span><span class="lg-en">Dhikr</span></a>
     <a href="dial.html">🕐 <span class="lg-bn">ঘড়ি</span><span class="lg-en">Dial</span></a>
   </nav>
+
+  <div class="lang-toggle" role="group" aria-label="Site language / ওয়েবসাইটের ভাষা">
+    <button type="button" data-ui="bn" class="active">বাংলা</button>
+    <button type="button" data-ui="en">EN</button>
+  </div>
 </header>
 
 <!-- ═══════════ HERO ═══════════ -->
@@ -195,10 +194,6 @@
         </div>
         <div class="progress-meta">
           <span id="sceneLabel">প্রস্তুত</span>
-          <span class="lang-switch" role="group" aria-label="Narration language">
-            <button class="lang-btn active" data-lang="bn">বাংলা</button>
-            <button class="lang-btn" data-lang="en">EN</button>
-          </span>
           <button class="ctrl-btn small" id="btnMute" aria-label="শব্দ বন্ধ করুন">🔊</button>
         </div>
       </div>
@@ -235,6 +230,10 @@
 
   <!-- 🔊 listen to all 99 names, one by one -->
   <div class="listen-all">
+    <div class="voice-toggle" role="group" aria-label="আরবি নামের কণ্ঠস্বর">
+      <button type="button" data-voice="male" aria-pressed="true"><span aria-hidden="true">♂</span> <span class="lg-bn">পুরুষ</span><span class="lg-en">Male</span></button>
+      <button type="button" data-voice="female" aria-pressed="false"><span aria-hidden="true">♀</span> <span class="lg-bn">নারী</span><span class="lg-en">Female</span></button>
+    </div>
     <button class="btn btn-gold btn-sm" id="btnPlayAll">▶ <span class="lg-bn">সব ৯৯ নাম শুনুন</span><span class="lg-en">Listen to all 99 names</span></button>
     <span class="play-all-now" id="playAllNow" aria-live="polite"></span>
     <button class="btn btn-ghost btn-sm" id="btnStopAll" hidden>■ <span class="lg-bn">থামুন</span><span class="lg-en">Stop</span></button>

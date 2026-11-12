@@ -121,12 +121,13 @@ const store = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
 };
 let LANG = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
+let NAME_VOICE = store.get('asma-name-voice', 'male') === 'female' ? 'female' : 'male';
 const fmt = n => LANG === 'bn' ? String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[+d]) : String(n);
 const localize = (bn, en) => LANG === 'bn' ? bn : en;
 
 let rot = 0;
 let current = 3;                    // Al-Quddūs
-let speech = null;
+let nameAudio = null;
 let autoPlaying = false;
 let autoCount = 0;
 let autoTimer = null;
@@ -206,67 +207,44 @@ function paintName() {
   });
 }
 
-/* ─── speech in the selected site language ─── */
+/* ─── Arabic recordings for the selected male or female voice ─── */
 function stopCurrentPlayback() {
   playbackRun++;
-  if (speech) {
-    speech.onstart = speech.onend = speech.onerror = null;
-    speech = null;
-  }
-  if ('speechSynthesis' in window) {
-    try { window.speechSynthesis.cancel(); } catch {}
-  }
+  if (!nameAudio) return;
+  nameAudio.onplaying = nameAudio.onended = nameAudio.onerror = null;
+  try { nameAudio.pause(); nameAudio.removeAttribute('src'); } catch {}
+  nameAudio = null;
 }
 
 function playName(i, onComplete = null) {
   stopCurrentPlayback();
   const run = playbackRun;
-  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
-    autoStatus.textContent = localize(
-      'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই',
-      'Speech is unavailable in this browser'
-    );
-    if (onComplete) onComplete();
-    return;
-  }
-
-  const text = LANG === 'bn' ? D[i][2] : D[i][0];
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = LANG === 'bn' ? 'bn-BD' : 'en-US';
-  utterance.rate = .85;
-  utterance.pitch = 1;
-  speech = utterance;
+  const clip = new Audio(`assets/audio/names/${NAME_VOICE}/n${String(i + 1).padStart(2, '0')}.mp3`);
+  nameAudio = clip;
   let finished = false;
   const finish = () => {
     if (finished || run !== playbackRun) return;
     finished = true;
-    if (speech === utterance) speech = null;
+    if (nameAudio === clip) nameAudio = null;
     if (onComplete) onComplete();
   };
-  utterance.onstart = () => { if (run === playbackRun) markHeard(i); };
-  utterance.onend = finish;
   const fail = () => {
     if (finished || run !== playbackRun) return;
     finished = true;
-    if (autoPlaying) {
-      stopAutoPlay(localize('কণ্ঠস্বর চালানো যায়নি। ব্রাউজারের ভাষা-সুবিধা পরীক্ষা করুন।', 'Speech failed. Check your browser voice support.'), true);
-    } else {
-      autoStatus.textContent = localize('কণ্ঠস্বর চালানো যায়নি।', 'Speech could not be played.');
+    const message = localize(
+      'নির্বাচিত আরবি কণ্ঠের রেকর্ডিং পাওয়া যায়নি।',
+      'The selected Arabic voice recording is missing.'
+    );
+    if (autoPlaying) stopAutoPlay(message, true);
+    else {
+      autoStatus.textContent = message;
       stopCurrentPlayback();
     }
   };
-  utterance.onerror = fail;
-
-  try {
-    const prefix = LANG;
-    const voice = (window.speechSynthesis.getVoices?.() || [])
-      .find(v => (v.lang || '').replace('_', '-').toLowerCase().startsWith(prefix));
-    if (voice) {
-      utterance.voice = voice;
-      utterance.lang = voice.lang.replace('_', '-');
-    }
-    window.speechSynthesis.speak(utterance);
-  } catch { fail(); }
+  clip.onplaying = () => { if (run === playbackRun) markHeard(i); };
+  clip.onended = finish;
+  clip.onerror = fail;
+  clip.play().catch(fail);
 }
 
 function markHeard(i) {
@@ -344,13 +322,6 @@ function playAutoStep(i, run, advance = false) {
 }
 
 function startAutoPlay() {
-  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
-    autoStatus.textContent = localize(
-      'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই',
-      'Speech is unavailable in this browser'
-    );
-    return;
-  }
   stopCurrentPlayback();
   autoPlaying = true;
   autoCount = 0;
@@ -366,6 +337,27 @@ autoPlayBtn.addEventListener('click', () => {
   else startAutoPlay();
 });
 
+function syncVoiceControls() {
+  document.querySelectorAll('.voice-toggle').forEach(group => group.setAttribute('aria-label', localize('আরবি নামের কণ্ঠস্বর', 'Arabic name voice')));
+  document.querySelectorAll('.voice-toggle button').forEach(button => {
+    const active = button.dataset.voice === NAME_VOICE;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+    button.setAttribute('aria-label', button.dataset.voice === 'female'
+      ? localize('নারী কণ্ঠ', 'Female voice')
+      : localize('পুরুষ কণ্ঠ', 'Male voice'));
+  });
+}
+function setNameVoice(next, persist = true) {
+  next = next === 'female' ? 'female' : 'male';
+  if (next === NAME_VOICE) return;
+  NAME_VOICE = next;
+  if (autoPlaying) stopAutoPlay(localize('কণ্ঠস্বর পরিবর্তিত হয়েছে।', 'Voice changed.'), true);
+  else stopCurrentPlayback();
+  syncVoiceControls();
+  if (persist) store.set('asma-name-voice', NAME_VOICE);
+}
+
 function applyLang() {
   document.documentElement.lang = LANG;
   document.documentElement.dataset.lang = LANG;
@@ -377,6 +369,7 @@ function applyLang() {
   document.querySelector('.site-nav').setAttribute('aria-label', localize('সাইট নেভিগেশন', 'Site navigation'));
   document.querySelector('.lang-toggle').setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language'));
   document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.ui === LANG));
+  syncVoiceControls();
   wheel.setAttribute('aria-label', localize('৯৯টি নামের ডায়াল', '99-name clock face'));
   autoPlayBtn.textContent = autoButtonLabel();
   autoPlayBtn.setAttribute('aria-pressed', autoPlaying ? 'true' : 'false');
@@ -402,10 +395,18 @@ function setLanguage(next) {
 document.querySelectorAll('.lang-toggle button').forEach(b => {
   b.addEventListener('click', () => setLanguage(b.dataset.ui));
 });
+document.querySelectorAll('.voice-toggle button').forEach(b => {
+  b.addEventListener('click', () => setNameVoice(b.dataset.voice));
+});
 window.addEventListener('storage', e => {
-  if (e.key !== 'asma-lang') return;
-  const nextLang = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
-  if (nextLang !== LANG) setLanguage(nextLang);
+  if (e.key === 'asma-lang') {
+    const nextLang = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
+    if (nextLang !== LANG) setLanguage(nextLang);
+  }
+  if (e.key === 'asma-name-voice') {
+    const nextVoice = store.get('asma-name-voice', 'male') === 'female' ? 'female' : 'male';
+    if (nextVoice !== NAME_VOICE) setNameVoice(nextVoice, false);
+  }
 });
 
 /* wheel background click = random spin */
