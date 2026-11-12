@@ -640,9 +640,9 @@ function setNameVoice(next, persist = true) {
 function applyLang() {
   document.documentElement.lang = LANG;
   document.documentElement.dataset.lang = LANG;
-  document.title = localize('৯৯ সুন্দর নাম · আল্লাহর নামের ধিকর', 'The 99 Beautiful Names of Allah');
+  document.title = localize('৯৯ সুন্দর নাম · আল্লাহর নামের জিকির', 'The 99 Beautiful Names of Allah');
   $('#pageDescription').content = localize(
-    'আল্লাহর ৯৯টি সুন্দর নাম, বাংলা অর্থ, ধিকর ও তসবিহ কাউন্টার।',
+    'আল্লাহর ৯৯টি সুন্দর নাম, বাংলা অর্থ, জিকির ও তসবিহ কাউন্টার।',
     'Explore the 99 Beautiful Names of Allah with meanings, dhikr and a tasbih counter.'
   );
   CINE.lang = LANG;
