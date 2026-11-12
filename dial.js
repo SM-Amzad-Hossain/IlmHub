@@ -1,107 +1,107 @@
 /* ═══ 99 Names of Allah — the dial ═══ */
 'use strict';
 
-/* [transliteration, বাংলা অর্থ, English meaning] */
+/* [transliteration, Arabic name, বাংলা অর্থ, English meaning] */
 const D = [
-['Ar-Rahmān','পরম করুণাময়','The Most Gracious'],
-['Ar-Rahīm','অতি দয়ালু','The Most Merciful'],
-['Al-Malik','সার্বভৌম রাজা','The King, The Sovereign'],
-['Al-Quddūs','পবিত্রতম','The Most Holy'],
-['As-Salām','শান্তির উৎস','The Source of Peace'],
-['Al-Mu’min','নিরাপত্তা ও বিশ্বাস প্রদানকারী','The Granter of Security'],
-['Al-Muhaymin','রক্ষাকারী ও পর্যবেক্ষক','The Guardian, The Overseer'],
-['Al-ʿAzīz','পরাক্রমশালী','The Almighty, The Mighty'],
-['Al-Jabbār','প্রবল ও জবরদস্তির স্বামী','The Compeller, The Omnipotent'],
-['Al-Mutakabbir','মহান ও উন্নত','The Supreme, The Majestic'],
-['Al-Khāliq','সৃষ্টিকর্তা','The Creator'],
-['Al-Bāriʾ','সৃষ্টি রচয়িতা','The Maker, The Evolver'],
-['Al-Muṣawwir','আকৃতিদাতা','The Fashioner, The Designer'],
-['Al-Ghaffār','পরম ক্ষমাকারী','The Absolute Forgiver'],
-['Al-Qahhār','সর্বজয়ী','The Subduer, The Vanquisher'],
-['Al-Wahhāb','নিঃশর্ত প্রদানকারী','The Supreme Bestower'],
-['Ar-Razzāq','রিজিকদাতা, সরবরাহকারী','The Provider, The Sustainer'],
-['Al-Fattāḥ','বিজয় ও সমাধানের দ্বার খোলারকারী','The Opener, The Judge'],
-['Al-ʿAlīm','সর্বজ্ঞ','The All-Knowing'],
-['Al-Qābiḍ','সংকুচিতকারী, রোধকারী','The Withholder, The Restrainer'],
-['Al-Bāsiṭ','প্রসারিতকারী, প্রদানকারী','The Extender, The Expander'],
-['Al-Khāfiḍ','অবনতিকারী, নত করারকারী','The Abaser, The Reducer'],
-['Ar-Rāfiʿ','উন্নীতকারী, মর্যাদা দানকারী','The Exalter, The Elevator'],
-['Al-Muʿizz','সম্মান প্রদানকারী','The Giver of Honour'],
-['Al-Muḏill','অপমানকারী, লাঞ্ছিতকারী','The Giver of Dishonour'],
-['As-Samīʿ','সর্বশ্রোতা','The All-Hearing'],
-['Al-Baṣīr','সর্বদর্শী','The All-Seeing'],
-['Al-Ḥakam','বিচারক, সিদ্ধান্তদাতা','The Judge, The Arbitrator'],
-['Al-ʿAdl','ন্যায়পরায়ণ','The Absolutely Just'],
-['Al-Laṭīf','সূক্ষ্ম ও সদয়','The Subtly Kind, The Gentle'],
-['Al-Khabīr','সুবিজ্ঞ','The All-Aware'],
-['Al-Ḥalīm','ধৈর্যশীল, ক্ষমাশীল','The Forbearing, The Indulgent'],
-['Al-ʿAẓīm','মহান ও চিরমহিমান্বিত','The Most Great, The Magnificent'],
-['Al-Ghafūr','প্রায়শ ক্ষমাকারী','The Oft-Forgiving'],
-['Ash-Shakūr','কৃতজ্ঞ, পুরস্কার বাড়ানোরকারী','The Appreciative, The Grateful'],
-['Al-ʿAliyy','সর্বোচ্চ, চিরউন্নত','The Most High, The Sublime'],
-['Al-Kabīr','সর্বমহান','The Greatest, The Most Great'],
-['Al-Ḥafīẓ','রক্ষাকারী, সংরক্ষক','The Preserver, The Protector'],
-['Al-Muqīt','পুষ্টিদাতা, রক্ষক','The Nourisher, The Feeder'],
-['Al-Ḥasīb','হিসাবকর্তা, যথেষ্টকারী','The Ever-Reckoner, The Sufficient'],
-['Al-Jalīl','মহিমান্বিত','The Majestic, The Grand'],
-['Al-Karīm','দানশীল, মহান','The Most Generous, The Noble'],
-['Ar-Raqīb','নজরদার, পর্যবেক্ষক','The Watchful, The Observer'],
-['Al-Mujīb','দোয়া কবুলকারী','The Responsive, The Answerer'],
-['Al-Wāsiʿ','বিস্তৃত, সর্বব্যাপী','The Vast, The All-Encompassing'],
-['Al-Ḥakīm','প্রজ্ঞাবান','The Most Wise'],
-['Al-Wadūd','অতি স্নেহশীল','The Most Loving, The Affectionate'],
-['Al-Majīd','মহিমান্বিত, সম্মানিত','The Most Glorious, The Illustrious'],
-['Al-Bāʿiṯ','পুনরুত্থানদাতা','The Resurrector, The Awakener'],
-['Ash-Shahīd','সর্বসাক্ষী','The Witness, The Testifier'],
-['Al-Ḥaqq','সত্য ও প্রকৃত','The Absolute Truth, The Reality'],
-['Al-Wakīl','নির্ভরযোগ্য পৃষ্ঠপোষক','The Trustee, The Guardian'],
-['Al-Qawiyy','পরাক্রমশালী','The All-Strong'],
-['Al-Matīn','দৃঢ় ও অটল','The Firm, The Steadfast'],
-['Al-Waliyy','বন্ধু ও অভিভাবক','The Protecting Friend, The Helper'],
-['Al-Ḥamīd','সকল প্রশংসার যোগ্য','The All-Praiseworthy'],
-['Al-Muḥsī','গণক, পরিমাপকারী','The Accounter, The Numberer'],
-['Al-Mubdiʾ','সূচনাকারী, উদ্ভাবক','The Originator, The Initiator'],
-['Al-Muʿīd','পুনরুদ্ধারকারী','The Restorer, The Reinstate'],
-['Al-Muḥyī','জীবনদাতা','The Giver of Life'],
-['Al-Mumīt','মৃত্যুদাতা','The Bringer of Death'],
-['Al-Ḥayy','চিরজীবী','The Ever-Living'],
-['Al-Qayyūm','স্বয়ংস্থিত, নিজেই সমর্থ','The Self-Subsisting, The Sustainer'],
-['Al-Wājid','পাওয়া যায় এমন, লাভকারী','The Perceiver, The Finder'],
-['Al-Mājid','মহিমাময়, সম্মানজনক','The Illustrious, The Magnificent'],
-['Al-Wāḥid','একক, অদ্বিতীয়','The One, The Unique'],
-['Al-ʾAḥad','সম্পূর্ণ একক, অবিভাজ্য','The One, The Indivisible'],
-['Aṣ-Ṣamad','চিরস্থায়ী, সর্বনির্ভর','The Eternal Refuge, The Self-Sufficient'],
-['Al-Qādir','সর্বশক্তিমান','The All-Powerful'],
-['Al-Muqtadir','সর্ব-নির্ধারক, প্রবল','The All-Dominant, The Determiner'],
-['Al-Muqaddim','অগ্রসারক, এগিয়ে আনারকারী','The Expediter, He Who Brings Forward'],
-['Al-Muʾakhkhir','বিলম্বকারী, পশ্চাদসারক','The Delayer, He Who Puts Far Away'],
-['Al-ʾAwwal','প্রথম, আদিহীন','The First, The Beginning-less'],
-['Al-ʾĀkhir','শেষ, চিরন্তন','The Last, The Endless'],
-['Aẓ-Ẓāhir','প্রকাশিত, বাহ্য','The Manifest, The Evident'],
-['Al-Bāṭin','গোপন, অন্তর্নিহিত','The Hidden, The Inner'],
-['Al-Wali','পৃষ্ঠপোষক, শাসনকর্তা','The Patron, The Governing Lord'],
-['Al-Mutaʿālī','সর্বোচ্চ মহিমান্বিত','The Supremely Exalted'],
-['Al-Barr','উপকারী, দয়ার উৎস','The Source of Goodness, The Beneficent'],
-['At-Tawwāb','অনুতপ্ত গ্রহণকারী','The Ever-Accepting of Repentance'],
-['Al-Muntaqim','অত্যাচারীর প্রতিশোধী','The Avenger of the Wrong'],
-['Al-ʿAfuww','ক্ষমাকারী, মুছে দেয় এমন','The Pardoner, The Effacer'],
-['Ar-Raʾūf','অতি সদয়, করুণাময়','The Very Kind, The Compassionate'],
-['Mālik al-Mulk','রাজ্যের স্বামী','The Owner of All Sovereignty'],
-['Ḏhū l-Jalāli wa-l-ʾIkrām','মহিমা ও সম্মানের ধনী','The Lord of Majesty and Honour'],
-['Al-Muqsiṭ','ন্যায়পরায়ণ, সুষম বিচারকারী','The Equitable, The Just'],
-['Al-Jāmiʿ','সমবেতকারী, ঐক্য সাধনকারী','The Gatherer, The Unifier'],
-['Al-Ghāniyy','অভাবহীন, স্বয়ংসম্পন্ন','The Self-Sufficient, The Rich'],
-['Al-Mughniyy','সমৃদ্ধকারী, মুক্তিদাতা','The Enricher, The Emancipator'],
-['Al-Māniʿ','প্রতিরোধক, বাধাদাতা','The Preventer, The Withholder'],
-['Aḍ-Ḍār','পরীক্ষার জন্য ক্ষতিকর','The Distressor, The Harm-Bringer'],
-['An-Nāfiʿ','উপকারী, কল্যাণকারী','The Benefactor, The Source of Good'],
-['An-Nūr','আলো','The Light'],
-['Al-Hādī','পথপ্রদর্শক','The Guide, The Way'],
-['Al-Badīʿ','অনন্য সৃষ্টিকর্তা, অতুলনীয়','The Originator, The Incomparable'],
-['Al-Bāqī','চিরস্থায়ী, অনন্ত','The Everlasting, The Infinite'],
-['Al-Wāriṯ','উত্তরাধিকারী','The Heir, The Inheritor of All'],
-['Ar-Rashīd','সঠিক পথের পথপ্রদর্শক','The Guide to the Right Path'],
-['Aṣ-Ṣabūr','অত্যন্ত ধৈর্যশীল','The Patient, The Timeless']
+['Ar-Rahmān','ٱلرَّحْمَٰنُ','পরম করুণাময়','The Most Gracious'],
+['Ar-Rahīm','ٱلرَّحِيمُ','অতি দয়ালু','The Most Merciful'],
+['Al-Malik','ٱلْمَلِكُ','সার্বভৌম রাজা','The King, The Sovereign'],
+['Al-Quddūs','ٱلْقُدُّوسُ','পবিত্রতম','The Most Holy'],
+['As-Salām','ٱلسَّلَامُ','শান্তির উৎস','The Source of Peace'],
+['Al-Mu’min','ٱلْمُؤْمِنُ','নিরাপত্তা ও বিশ্বাস প্রদানকারী','The Granter of Security'],
+['Al-Muhaymin','ٱلْمُهَيْمِنُ','রক্ষাকারী ও পর্যবেক্ষক','The Guardian, The Overseer'],
+['Al-ʿAzīz','ٱلْعَزِيزُ','পরাক্রমশালী','The Almighty, The Mighty'],
+['Al-Jabbār','ٱلْجَبَّارُ','প্রবল ও জবরদস্তির স্বামী','The Compeller, The Omnipotent'],
+['Al-Mutakabbir','ٱلْمُتَكَبِّرُ','মহান ও উন্নত','The Supreme, The Majestic'],
+['Al-Khāliq','ٱلْخَالِقُ','সৃষ্টিকর্তা','The Creator'],
+['Al-Bāriʾ','ٱلْبَارِئُ','সৃষ্টি রচয়িতা','The Maker, The Evolver'],
+['Al-Muṣawwir','ٱلْمُصَوِّرُ','আকৃতিদাতা','The Fashioner, The Designer'],
+['Al-Ghaffār','ٱلْغَفَّارُ','পরম ক্ষমাকারী','The Absolute Forgiver'],
+['Al-Qahhār','ٱلْقَهَّارُ','সর্বজয়ী','The Subduer, The Vanquisher'],
+['Al-Wahhāb','ٱلْوَهَّابُ','নিঃশর্ত প্রদানকারী','The Supreme Bestower'],
+['Ar-Razzāq','ٱلرَّزَّاقُ','রিজিকদাতা, সরবরাহকারী','The Provider, The Sustainer'],
+['Al-Fattāḥ','ٱلْفَتَّاحُ','বিজয় ও সমাধানের দ্বার খোলারকারী','The Opener, The Judge'],
+['Al-ʿAlīm','ٱلْعَلِيمُ','সর্বজ্ঞ','The All-Knowing'],
+['Al-Qābiḍ','ٱلْقَابِضُ','সংকুচিতকারী, রোধকারী','The Withholder, The Restrainer'],
+['Al-Bāsiṭ','ٱلْبَاسِطُ','প্রসারিতকারী, প্রদানকারী','The Extender, The Expander'],
+['Al-Khāfiḍ','ٱلْخَافِضُ','অবনতিকারী, নত করারকারী','The Abaser, The Reducer'],
+['Ar-Rāfiʿ','ٱلرَّافِعُ','উন্নীতকারী, মর্যাদা দানকারী','The Exalter, The Elevator'],
+['Al-Muʿizz','ٱلْمُعِزُّ','সম্মান প্রদানকারী','The Giver of Honour'],
+['Al-Muḏill','ٱلْمُذِلُّ','অপমানকারী, লাঞ্ছিতকারী','The Giver of Dishonour'],
+['As-Samīʿ','ٱلسَّمِيعُ','সর্বশ্রোতা','The All-Hearing'],
+['Al-Baṣīr','ٱلْبَصِيرُ','সর্বদর্শী','The All-Seeing'],
+['Al-Ḥakam','ٱلْحَكَمُ','বিচারক, সিদ্ধান্তদাতা','The Judge, The Arbitrator'],
+['Al-ʿAdl','ٱلْعَدْلُ','ন্যায়পরায়ণ','The Absolutely Just'],
+['Al-Laṭīf','ٱللَّطِيفُ','সূক্ষ্ম ও সদয়','The Subtly Kind, The Gentle'],
+['Al-Khabīr','ٱلْخَبِيرُ','সুবিজ্ঞ','The All-Aware'],
+['Al-Ḥalīm','ٱلْحَلِيمُ','ধৈর্যশীল, ক্ষমাশীল','The Forbearing, The Indulgent'],
+['Al-ʿAẓīm','ٱلْعَظِيمُ','মহান ও চিরমহিমান্বিত','The Most Great, The Magnificent'],
+['Al-Ghafūr','ٱلْغَفُورُ','প্রায়শ ক্ষমাকারী','The Oft-Forgiving'],
+['Ash-Shakūr','ٱلشَّكُورُ','কৃতজ্ঞ, পুরস্কার বাড়ানোরকারী','The Appreciative, The Grateful'],
+['Al-ʿAliyy','ٱلْعَلِيُّ','সর্বোচ্চ, চিরউন্নত','The Most High, The Sublime'],
+['Al-Kabīr','ٱلْكَبِيرُ','সর্বমহান','The Greatest, The Most Great'],
+['Al-Ḥafīẓ','ٱلْحَفِيظُ','রক্ষাকারী, সংরক্ষক','The Preserver, The Protector'],
+['Al-Muqīt','ٱلْمُقِيتُ','পুষ্টিদাতা, রক্ষক','The Nourisher, The Feeder'],
+['Al-Ḥasīb','ٱلْحَسِيبُ','হিসাবকর্তা, যথেষ্টকারী','The Ever-Reckoner, The Sufficient'],
+['Al-Jalīl','ٱلْجَلِيلُ','মহিমান্বিত','The Majestic, The Grand'],
+['Al-Karīm','الْكَرِيمُ','দানশীল, মহান','The Most Generous, The Noble'],
+['Ar-Raqīb','ٱلرَّقِيبُ','নজরদার, পর্যবেক্ষক','The Watchful, The Observer'],
+['Al-Mujīb','ٱلْمُجِيبُ','দোয়া কবুলকারী','The Responsive, The Answerer'],
+['Al-Wāsiʿ','ٱلْوَاسِعُ','বিস্তৃত, সর্বব্যাপী','The Vast, The All-Encompassing'],
+['Al-Ḥakīm','ٱلْحَكِيمُ','প্রজ্ঞাবান','The Most Wise'],
+['Al-Wadūd','ٱلْوَدُودُ','অতি স্নেহশীল','The Most Loving, The Affectionate'],
+['Al-Majīd','ٱلْمَجِيدُ','মহিমান্বিত, সম্মানিত','The Most Glorious, The Illustrious'],
+['Al-Bāʿiṯ','ٱلْبَاعِثُ','পুনরুত্থানদাতা','The Resurrector, The Awakener'],
+['Ash-Shahīd','ٱلشَّهِيدُ','সর্বসাক্ষী','The Witness, The Testifier'],
+['Al-Ḥaqq','ٱلْحَقُّ','সত্য ও প্রকৃত','The Absolute Truth, The Reality'],
+['Al-Wakīl','ٱلْوَكِيلُ','নির্ভরযোগ্য পৃষ্ঠপোষক','The Trustee, The Guardian'],
+['Al-Qawiyy','ٱلْقَوِيُّ','পরাক্রমশালী','The All-Strong'],
+['Al-Matīn','ٱلْمَتِينُ','দৃঢ় ও অটল','The Firm, The Steadfast'],
+['Al-Waliyy','ٱلْوَلِيُّ','বন্ধু ও অভিভাবক','The Protecting Friend, The Helper'],
+['Al-Ḥamīd','ٱلْحَمِيدُ','সকল প্রশংসার যোগ্য','The All-Praiseworthy'],
+['Al-Muḥsī','ٱلْمُحْصِىُ','গণক, পরিমাপকারী','The Accounter, The Numberer'],
+['Al-Mubdiʾ','ٱلْمُبْدِئُ','সূচনাকারী, উদ্ভাবক','The Originator, The Initiator'],
+['Al-Muʿīd','ٱلْمُعِيدُ','পুনরুদ্ধারকারী','The Restorer, The Reinstate'],
+['Al-Muḥyī','ٱلْمُحْيِي','জীবনদাতা','The Giver of Life'],
+['Al-Mumīt','ٱلْمُمِيتُ','মৃত্যুদাতা','The Bringer of Death'],
+['Al-Ḥayy','ٱلْحَىُّ','চিরজীবী','The Ever-Living'],
+['Al-Qayyūm','ٱلْقَيُّومُ','স্বয়ংস্থিত, নিজেই সমর্থ','The Self-Subsisting, The Sustainer'],
+['Al-Wājid','ٱلْوَاجِدُ','পাওয়া যায় এমন, লাভকারী','The Perceiver, The Finder'],
+['Al-Mājid','ٱلْمَاجِدُ','মহিমাময়, সম্মানজনক','The Illustrious, The Magnificent'],
+['Al-Wāḥid','ٱلْوَاحِدُ','একক, অদ্বিতীয়','The One, The Unique'],
+['Al-ʾAḥad','ٱلْأَحَدُ','সম্পূর্ণ একক, অবিভাজ্য','The One, The Indivisible'],
+['Aṣ-Ṣamad','ٱلصَّمَدُ','চিরস্থায়ী, সর্বনির্ভর','The Eternal Refuge, The Self-Sufficient'],
+['Al-Qādir','ٱلْقَادِرُ','সর্বশক্তিমান','The All-Powerful'],
+['Al-Muqtadir','ٱلْمُقْتَدِرُ','সর্ব-নির্ধারক, প্রবল','The All-Dominant, The Determiner'],
+['Al-Muqaddim','ٱلْمُقَدِّمُ','অগ্রসারক, এগিয়ে আনারকারী','The Expediter, He Who Brings Forward'],
+['Al-Muʾakhkhir','ٱلْمُؤَخِّرُ','বিলম্বকারী, পশ্চাদসারক','The Delayer, He Who Puts Far Away'],
+['Al-ʾAwwal','ٱلْأَوَّلُ','প্রথম, আদিহীন','The First, The Beginning-less'],
+['Al-ʾĀkhir','اَلْآخِرُ','শেষ, চিরন্তন','The Last, The Endless'],
+['Aẓ-Ẓāhir','ٱلظَّاهِرُ','প্রকাশিত, বাহ্য','The Manifest, The Evident'],
+['Al-Bāṭin','ٱلْبَاطِنُ','গোপন, অন্তর্নিহিত','The Hidden, The Inner'],
+['Al-Wali','ٱلْوَالِي','পৃষ্ঠপোষক, শাসনকর্তা','The Patron, The Governing Lord'],
+['Al-Mutaʿālī','ٱلْمُتَعَالِي','সর্বোচ্চ মহিমান্বিত','The Supremely Exalted'],
+['Al-Barr','ٱلْبَرُّ','উপকারী, দয়ার উৎস','The Source of Goodness, The Beneficent'],
+['At-Tawwāb','ٱلتَّوَّابُ','অনুতপ্ত গ্রহণকারী','The Ever-Accepting of Repentance'],
+['Al-Muntaqim','ٱلْمُنْتَقِمُ','অত্যাচারীর প্রতিশোধী','The Avenger of the Wrong'],
+['Al-ʿAfuww','اَلْعَفُوُّ','ক্ষমাকারী, মুছে দেয় এমন','The Pardoner, The Effacer'],
+['Ar-Raʾūf','اَلرَّؤُوفُ','অতি সদয়, করুণাময়','The Very Kind, The Compassionate'],
+['Mālik al-Mulk','مَـٰلِكُ ٱلْمُلْكِ','রাজ্যের স্বামী','The Owner of All Sovereignty'],
+['Ḏhū l-Jalāli wa-l-ʾIkrām','ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ','মহিমা ও সম্মানের ধনী','The Lord of Majesty and Honour'],
+['Al-Muqsiṭ','اَلْمُقْسِطُ','ন্যায়পরায়ণ, সুষম বিচারকারী','The Equitable, The Just'],
+['Al-Jāmiʿ','اَلْجَامِعُ','সমবেতকারী, ঐক্য সাধনকারী','The Gatherer, The Unifier'],
+['Al-Ghāniyy','ٱلْغَنِيُّ','অভাবহীন, স্বয়ংসম্পন্ন','The Self-Sufficient, The Rich'],
+['Al-Mughniyy','اَلْمُغْنِيُّ','সমৃদ্ধকারী, মুক্তিদাতা','The Enricher, The Emancipator'],
+['Al-Māniʿ','اَلْمَانِعُ','প্রতিরোধক, বাধাদাতা','The Preventer, The Withholder'],
+['Aḍ-Ḍār','اَلضَّارُ','পরীক্ষার জন্য ক্ষতিকর','The Distressor, The Harm-Bringer'],
+['An-Nāfiʿ','اَلنَّافِعُ','উপকারী, কল্যাণকারী','The Benefactor, The Source of Good'],
+['An-Nūr','اَلنُّورُ','আলো','The Light'],
+['Al-Hādī','اَلْهَادِي','পথপ্রদর্শক','The Guide, The Way'],
+['Al-Badīʿ','اَلْبَدِيعُ','অনন্য সৃষ্টিকর্তা, অতুলনীয়','The Originator, The Incomparable'],
+['Al-Bāqī','اَلْبَاقِي','চিরস্থায়ী, অনন্ত','The Everlasting, The Infinite'],
+['Al-Wāriṯ','اَلْوَارِثُ','উত্তরাধিকারী','The Heir, The Inheritor of All'],
+['Ar-Rashīd','اَلرَّشِيدُ','সঠিক পথের পথপ্রদর্শক','The Guide to the Right Path'],
+['Aṣ-Ṣabūr','اَلصَّبُورُ','অত্যন্ত ধৈর্যশীল','The Patient, The Timeless']
 ];
 
 const N = D.length;                 // 99
@@ -151,7 +151,9 @@ for (let i = 0; i < N; i++) {
   b.className = 'lbl';
   b.type = 'button';
   b.dataset.i = i;
-  b.textContent = D[i][0];
+  b.lang = 'ar';
+  b.dir = 'rtl';
+  b.textContent = D[i][1];
   b.addEventListener('click', ev => { ev.stopPropagation(); select(i, false); });
   wheel.appendChild(b);
   labels.push(b);
@@ -187,19 +189,14 @@ function applyRotation(duration) {
 }
 
 function paintName() {
-  const [t, b, e] = D[current];
-  nm.textContent = t;
+  const [, arabic, b, e] = D[current];
+  nm.textContent = arabic;
   mn.textContent = e;
   mnBn.textContent = b;
   labels.forEach((el, i) => el.classList.toggle('on', i === current));
 }
 
 /* ─── sound ─── */
-const say = t => t.normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '')
-  .replace(/[ʿʾʼ]/g, '')
-  .replace(/-/g, ' ').trim();
-
 function stopCurrentPlayback() {
   if (audio) {
     audio.onplaying = audio.onended = audio.onerror = null;
@@ -233,9 +230,15 @@ function playName(i, onComplete = null) {
     fallbackStarted = true;
     if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
       try {
-        const utterance = new SpeechSynthesisUtterance(say(D[i][0]));
-        utterance.lang = 'en-US'; utterance.rate = .8;
+        const utterance = new SpeechSynthesisUtterance(D[i][1]);
+        utterance.lang = 'ar-SA'; utterance.rate = .8;
         utterance.onend = finish; utterance.onerror = finish;
+        const voices = window.speechSynthesis.getVoices?.() || [];
+        const arabicVoice = voices.find(v => /^ar(?:[-_]|$)/i.test(v.lang || ''));
+        if (arabicVoice) {
+          utterance.voice = arabicVoice;
+          utterance.lang = arabicVoice.lang.replace('_', '-');
+        }
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
         markHeard(i);
