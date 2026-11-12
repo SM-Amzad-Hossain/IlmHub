@@ -97,16 +97,16 @@ button{font:inherit;color:inherit;background:none;border:none}
 .lbl{
   position:absolute;left:50%;top:50%;
   transform-origin:0 0;white-space:nowrap;
-  font-family:'Noto Naskh Arabic',serif;direction:rtl;unicode-bidi:plaintext;
-  font-size:clamp(6px,1.4vw,8px);
-  font-weight:400;letter-spacing:0;line-height:1.35;
+  font-family:'Oswald','Arial Narrow',sans-serif;direction:ltr;unicode-bidi:normal;
+  font-size:clamp(5px,1.55vw,8px);
+  font-weight:400;letter-spacing:.01em;line-height:1;
   color:rgba(255,255,255,.94);
   padding:0;cursor:pointer;
   transition:color .2s, text-shadow .2s, font-size .25s ease;
 }
 .lbl:hover{color:#ffd9d5;text-shadow:0 0 6px rgba(255,80,70,.8)}
 .lbl.on{
-  z-index:3;font-size:clamp(8px,1.8vw,11px);
+  z-index:3;font-size:clamp(7.5px,2.3vw,11px);
   color:#ff5a4e;text-shadow:0 0 8px rgba(255,59,48,.95);font-weight:700;
 }
 .lbl:focus-visible,.links a:focus-visible{
@@ -117,8 +117,8 @@ button{font:inherit;color:inherit;background:none;border:none}
 .clock-name{text-align:center;width:100%;margin-top:18px}
 .name-block{text-align:center;margin-top:14px;width:min(100%,520px)}
 .nm{
-  font-family:'Noto Naskh Arabic',serif;font-size:clamp(28px,8vw,42px);
-  line-height:1.35;letter-spacing:0;direction:rtl;
+  font-family:'Marcellus',serif;font-size:clamp(38px,10vw,50px);
+  line-height:1.05;letter-spacing:.01em;direction:ltr;
 }
 .mn{font-weight:600;font-size:16px;letter-spacing:.05em;margin-top:8px}
 .mn-bn{display:none}
@@ -157,7 +157,7 @@ button{font:inherit;color:inherit;background:none;border:none}
     position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:70%;margin:0;z-index:4;pointer-events:none;
   }
-  .clock-name .nm{font-size:clamp(18px,2.5vw,30px);line-height:1.3}
+  .clock-name .nm{font-size:clamp(18px,2.5vw,30px);line-height:1.08}
   .clock-name .mn{font-size:clamp(10px,1.15vw,14px);line-height:1.25;margin-top:6px}
 }
 @media (max-width:420px){

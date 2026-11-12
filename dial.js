@@ -151,9 +151,9 @@ for (let i = 0; i < N; i++) {
   b.className = 'lbl';
   b.type = 'button';
   b.dataset.i = i;
-  b.lang = 'ar';
-  b.dir = 'rtl';
-  b.textContent = D[i][1];
+  b.lang = 'en';
+  b.dir = 'ltr';
+  b.textContent = D[i][0];
   b.addEventListener('click', ev => { ev.stopPropagation(); select(i, false); });
   wheel.appendChild(b);
   labels.push(b);
@@ -189,8 +189,8 @@ function applyRotation(duration) {
 }
 
 function paintName() {
-  const [, arabic, b, e] = D[current];
-  nm.textContent = arabic;
+  const [transliteration, , b, e] = D[current];
+  nm.textContent = transliteration;
   mn.textContent = e;
   mnBn.textContent = b;
   labels.forEach((el, i) => el.classList.toggle('on', i === current));
