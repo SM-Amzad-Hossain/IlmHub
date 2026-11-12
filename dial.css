@@ -1,6 +1,6 @@
 /* ═══ 99 Names of Allah — the dial (clock) ═══
    Design matched to reference: black bg, segmented STRESS bar,
-   metallic purple rim, radial 99-name ring, twin red needles. */
+   metallic purple rim, radial 99-name ring, clean center display. */
 :root{
   --red:#ff3b30;
   --red-soft:#ff9d94;
@@ -54,9 +54,12 @@ button{font:inherit;color:inherit;background:none;border:none}
 }
 
 /* ─── dial ─── */
-.stage-wrap{margin-top:26px}
+.stage-wrap{
+  position:relative;display:flex;flex-direction:column;align-items:center;
+  width:var(--dial);margin-top:26px;
+}
 .dial{
-  position:relative;width:var(--dial);aspect-ratio:1;
+  position:relative;width:100%;aspect-ratio:1;
   user-select:none;
 }
 /* metallic purple outer rim (like the reference photo) */
@@ -109,8 +112,9 @@ button{font:inherit;color:inherit;background:none;border:none}
   outline:2px solid var(--pink);outline-offset:3px;
 }
 
-/* ─── name block ─── */
-.name-block{text-align:center;margin-top:28px;width:min(100%,520px)}
+/* ─── selected name: below the dial on phones, centered inside on laptops/desktops ─── */
+.clock-name{text-align:center;width:100%;margin-top:18px}
+.name-block{text-align:center;margin-top:14px;width:min(100%,520px)}
 .nm{
   font-family:'Marcellus',serif;font-size:clamp(38px,10vw,50px);
   line-height:1.05;letter-spacing:.01em;
@@ -118,7 +122,7 @@ button{font:inherit;color:inherit;background:none;border:none}
 .mn{font-weight:600;font-size:16px;letter-spacing:.05em;margin-top:8px}
 .mn-bn{display:none}
 .motto{
-  margin-top:12px;font-weight:600;font-size:11px;
+  margin-top:0;font-weight:600;font-size:11px;
   letter-spacing:.32em;color:rgba(255,255,255,.88);
 }
 .auto-controls{display:grid;justify-items:center;gap:6px;margin-top:16px}
@@ -146,6 +150,14 @@ button{font:inherit;color:inherit;background:none;border:none}
   margin-top:14px;font-family:'Hind Siliguri','Oswald',sans-serif;
   font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.45);
   max-width:340px;margin-left:auto;margin-right:auto;
+}
+@media (min-width:768px){
+  .clock-name{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:70%;margin:0;z-index:4;pointer-events:none;
+  }
+  .clock-name .nm{font-size:clamp(16px,2.4vw,26px);line-height:1.08}
+  .clock-name .mn{font-size:clamp(10px,1.15vw,14px);line-height:1.25;margin-top:6px}
 }
 @media (max-width:420px){
   .hd h1{letter-spacing:.1em}
