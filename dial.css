@@ -49,6 +49,12 @@ html[data-lang="bn"] body{font-family:'Hind Siliguri',sans-serif}
 }
 .voice-toggle button:hover{color:#fff}
 .voice-toggle button.active{color:#1e1111;background:linear-gradient(135deg,#f6c9c2,#d79b93)}
+.voice-source-link{
+  color:rgba(255,255,255,.58);font-size:10px;line-height:1.35;text-align:center;
+  text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px;
+  transition:color .2s;
+}
+.voice-source-link:hover,.voice-source-link:focus-visible{color:#fff}
 .home-link{
   border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:7px 13px;
   color:rgba(255,255,255,.72);font-size:12px;letter-spacing:.03em;transition:.2s;

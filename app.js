@@ -499,8 +499,8 @@ function sayNameSpeak(i, onend) {
     nameAudio = null;
     if (!ok) {
       const message = localize(
-        'নির্বাচিত আরবি কণ্ঠের রেকর্ডিং পাওয়া যায়নি।',
-        'The selected Arabic voice recording is missing.'
+        'এই কণ্ঠের স্থানীয় রেকর্ডিং নেই। বাহ্যিক উৎসে নাম ও কণ্ঠ বেছে শুনুন।',
+        'No local clip is available for this voice. Open the external source and choose the name and voice there.'
       );
       if (allIdx >= 0) stopAll(true);
       toast(message);

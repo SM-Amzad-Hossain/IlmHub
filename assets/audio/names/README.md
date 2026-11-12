@@ -8,3 +8,5 @@ Provide one clip per name in both voice sets:
 - `assets/audio/names/female/n01.mp3` through `n99.mp3`
 
 Each clip should contain the Arabic pronunciation of its corresponding name only. The voice selector is shared by the homepage and dial and persists across tabs. The existing MP3s in this directory's root are not used by the selector because they are not labeled by voice.
+
+If a local clip is missing, the homepage and dial link to the Physicians of the Heart pronunciation index. Playback remains on that external site, where the listener chooses the name and speaker; source recordings are not copied into this repository.
