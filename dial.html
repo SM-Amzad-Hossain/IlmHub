@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="bn">
+<html lang="en" data-lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,17 +25,19 @@
 
 <main class="stage-wrap">
   <div class="dial" id="dial">
-    <div class="face"></div>
+    <div class="rim" aria-hidden="true"></div>
+    <div class="face" aria-hidden="true"></div>
     <div class="ticks" id="ticks" aria-hidden="true"></div>
 
     <!-- rotating wheel of 99 names -->
-    <div class="wheel" id="wheel" role="list"></div>
+    <div class="wheel" id="wheel" role="group" aria-label="99-name clock face"></div>
 
-    <!-- fixed red needle at 12 o'clock -->
+    <!-- fixed red needles at 12 o'clock -->
     <div class="needle" aria-hidden="true"><i></i></div>
+    <div class="inner-needle" aria-hidden="true"><i></i></div>
 
     <!-- centre : say it in your heart -->
-    <button class="core" id="core" aria-label="Say the name">
+    <button class="core" id="core" type="button" aria-label="Repeat the selected name">
       <svg viewBox="0 0 100 100" class="med" aria-hidden="true">
         <circle cx="57" cy="30" r="12" fill="#fff"/>
         <path d="M57 45 C43 45 35 57 33 70 L81 70 C79 57 71 45 57 45 Z" fill="#fff"/>
@@ -49,10 +51,14 @@
 </main>
 
 <section class="name-block">
-  <div class="nm" id="nm">Al-Malik</div>
-  <div class="mn" id="mn">The King</div>
-  <div class="mn-bn" id="mnBn">সার্বভৌম রাজা</div>
+  <div class="nm" id="nm">Al-Quddūs</div>
+  <div class="mn" id="mn">The Most Holy</div>
+  <div class="mn-bn" id="mnBn">পবিত্রতম</div>
   <div class="motto">SAY IT IN YOUR HEART</div>
+  <div class="auto-controls">
+    <button class="auto-play" id="autoPlayBtn" type="button" aria-pressed="false">▶ Auto Play 99 Names</button>
+    <p class="auto-status" id="autoStatus" role="status" aria-live="polite">Starts from the selected name</p>
+  </div>
   <div class="links">
     <a href="index.html">← <span class="lg-bn">মূল সাইট</span><span class="lg-en">Main site</span></a>
     <a href="https://www.youtube.com/shorts/p5A0nzqJogA" target="_blank" rel="noopener">▶ inspired by · YouTube short ↗</a>

@@ -113,19 +113,30 @@ const nm = document.getElementById('nm');
 const mn = document.getElementById('mn');
 const mnBn = document.getElementById('mnBn');
 const core = document.getElementById('core');
+const autoPlayBtn = document.getElementById('autoPlayBtn');
+const autoStatus = document.getElementById('autoStatus');
 const stressVal = document.getElementById('stressVal');
 const stressFill = document.getElementById('stressFill');
 
 let rot = 0;                        // current wheel rotation (deg)
-let current = 2;                    // default : Al-Malik
+let current = 3;                    // default : Al-Quddus (as in the reference)
 let audio = null;
+let autoPlaying = false;
+let autoCount = 0;
+let autoTimer = null;
+let autoRun = 0;
 
 /* ─── persistence : which names have been heard ─── */
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
 };
-let heard = new Set(store.get('dial-heard', []));
+/* validate persisted indices so corrupt storage cannot break the dial */
+const savedHeard = store.get('dial-heard', []);
+let heard = new Set(
+  (Array.isArray(savedHeard) ? savedHeard : [])
+    .filter(v => Number.isInteger(v) && v >= 0 && v < N)
+);
 
 function paintStress() {
   const stress = Math.max(0, N - heard.size);
@@ -156,13 +167,16 @@ function layout() {
   const Rl = size * 0.415;          // label radius
   const Rt = size * 0.478;          // tick radius
   labels.forEach((el, i) => {
+    const angle = i * STEP;
     const r = (i % 2 === 0) ? Rl : Rl - size * 0.055;   // two staggered rows
+    // Lay each label along a radius, with its center pinned to the ring.
     el.style.transform =
-      `rotate(${i * STEP}deg) translateY(${-r}px) translate(-50%,-50%)`;
+      `rotate(${angle}deg) translateY(${-r}px) rotate(-90deg) translate(-50%,-50%)`;
   });
   [...ticksBox.children].forEach((el, i) => {
+    const angle = i * STEP;
     el.style.transform =
-      `rotate(${i * STEP}deg) translateY(${-Rt}px) translate(-50%,-50%)`;
+      `rotate(${angle}deg) translateY(${-Rt}px) translate(-50%,-50%)`;
   });
 }
 
@@ -187,33 +201,53 @@ const say = t => t.normalize('NFD')
   .replace(/[ʿʾʼ]/g, '')
   .replace(/-/g, ' ').trim();
 
-function playName(i) {
-  if (audio) { audio.onended = audio.onerror = null; audio.pause(); }
+function stopCurrentPlayback() {
+  if (audio) {
+    audio.onplaying = audio.onended = audio.onerror = null;
+    audio.pause();
+    audio = null;
+  }
+  if ('speechSynthesis' in window) {
+    try { window.speechSynthesis.cancel(); } catch {}
+  }
+  core.classList.remove('playing');
+}
+
+function playName(i, onComplete = null) {
+  stopCurrentPlayback();
   const url = `assets/audio/names/n${String(i + 1).padStart(2, '0')}.mp3`;
-  audio = new Audio(url);
-  let done = false;
-  const started = () => {
+  const clip = new Audio(url);
+  audio = clip;
+  let finished = false;
+  let fallbackStarted = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    if (audio === clip) audio = null;
+    core.classList.remove('playing');
+    if (onComplete) onComplete();
+  };
+  clip.onplaying = () => {
     core.classList.add('playing');
     markHeard(i);
   };
-  const stop = () => { core.classList.remove('playing'); };
-  audio.onplaying = started;
-  audio.onended = stop;
-  audio.onerror = () => {
-    if (done) return; done = true;
-    if ('speechSynthesis' in window) {
+  clip.onended = finish;
+  clip.onerror = () => {
+    if (finished || fallbackStarted) return;
+    fallbackStarted = true;
+    if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
       try {
-        const u = new SpeechSynthesisUtterance(say(D[i][0]));
-        u.lang = 'en-US'; u.rate = .8;
-        u.onend = stop; u.onerror = stop;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(u);
+        const utterance = new SpeechSynthesisUtterance(say(D[i][0]));
+        utterance.lang = 'en-US'; utterance.rate = .8;
+        utterance.onend = finish; utterance.onerror = finish;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
         core.classList.add('playing');
-      } catch { stop(); }
-    } else stop();
-    markHeard(i);
+        markHeard(i);
+      } catch { finish(); }
+    } else finish();
   };
-  audio.play().catch(() => audio.onerror());
+  clip.play().catch(() => { if (clip.onerror) clip.onerror(); });
 }
 
 function markHeard(i) {
@@ -225,24 +259,83 @@ function markHeard(i) {
 }
 
 /* ─── select a name (spin the wheel so it lands under the needle) ─── */
-function select(i, spin) {
+function select(i, spin, fromAuto = false, advanceAuto = false) {
+  if (autoPlaying && !fromAuto) stopAutoPlay('Auto play stopped.', true);
   current = ((i % N) + N) % N;
-  const desired = -current * STEP;
-  let delta = (((desired - rot) % 360) + 360) % 360;
-  if (spin) delta += 360 * (2 + Math.floor(Math.random() * 2));
-  rot += delta;
-  const dur = spin ? 1.5 + (delta / 360) * .35 : .8;
+  let delta = 0;
+
+  if (fromAuto && advanceAuto) {
+    // Move one name per step instead of spinning almost a full revolution.
+    rot -= STEP;
+  } else {
+    const desired = -current * STEP;
+    delta = (((desired - rot) % 360) + 360) % 360;
+    if (spin) delta += 360 * (2 + Math.floor(Math.random() * 2));
+    rot += delta;
+  }
+
+  const dur = fromAuto ? .45 : spin ? 1.5 + (delta / 360) * .35 : .8;
   applyRotation(dur);
   paintName();
-  playName(current);
+  if (!fromAuto) playName(current);
 }
+
+function stopAutoPlay(message, cancelMedia = false) {
+  autoPlaying = false;
+  autoRun++;
+  if (autoTimer !== null) {
+    clearTimeout(autoTimer);
+    autoTimer = null;
+  }
+  if (cancelMedia) stopCurrentPlayback();
+  autoPlayBtn.textContent = '▶ Auto Play 99 Names';
+  autoPlayBtn.setAttribute('aria-pressed', 'false');
+  if (message) autoStatus.textContent = message;
+}
+
+function playAutoStep(i, run, advance = false) {
+  if (!autoPlaying || run !== autoRun) return;
+  select(i, false, true, advance);
+  autoStatus.textContent = `Playing ${autoCount + 1} of ${N} — ${D[current][0]}`;
+  playName(current, () => {
+    if (!autoPlaying || run !== autoRun) return;
+    autoCount++;
+    if (autoCount >= N) {
+      stopAutoPlay('Finished playing all 99 names.');
+      return;
+    }
+    autoTimer = setTimeout(() => {
+      autoTimer = null;
+      playAutoStep((current + 1) % N, run, true);
+    }, 220);
+  });
+}
+
+function startAutoPlay() {
+  stopCurrentPlayback();
+  autoPlaying = true;
+  autoCount = 0;
+  const run = ++autoRun;
+  autoPlayBtn.textContent = '■ Stop Auto Play';
+  autoPlayBtn.setAttribute('aria-pressed', 'true');
+  playAutoStep(current, run);
+}
+
+autoPlayBtn.addEventListener('click', () => {
+  if (autoPlaying) stopAutoPlay('Auto play stopped.', true);
+  else startAutoPlay();
+});
 
 /* wheel background click = random spin */
 wheel.addEventListener('click', () => {
   select(Math.floor(Math.random() * N), true);
 });
 /* centre = repeat current name */
-core.addEventListener('click', ev => { ev.stopPropagation(); playName(current); });
+core.addEventListener('click', ev => {
+  ev.stopPropagation();
+  if (autoPlaying) stopAutoPlay('Auto play stopped.', true);
+  playName(current);
+});
 /* keyboard */
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') select(current + 1, false);
@@ -252,7 +345,7 @@ document.addEventListener('keydown', e => {
 /* ─── boot ─── */
 layout();
 let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
-rot = -current * STEP;      // park Al-Malik under the needle (like the reference)
+rot = -current * STEP;      // park Al-Quddus under the needle, as in the reference
 applyRotation(0);
 paintName();
 paintStress();
