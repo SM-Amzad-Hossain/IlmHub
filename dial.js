@@ -112,7 +112,6 @@ const ticksBox = document.getElementById('ticks');
 const nm = document.getElementById('nm');
 const mn = document.getElementById('mn');
 const mnBn = document.getElementById('mnBn');
-const core = document.getElementById('core');
 const autoPlayBtn = document.getElementById('autoPlayBtn');
 const autoStatus = document.getElementById('autoStatus');
 const stressVal = document.getElementById('stressVal');
@@ -210,7 +209,6 @@ function stopCurrentPlayback() {
   if ('speechSynthesis' in window) {
     try { window.speechSynthesis.cancel(); } catch {}
   }
-  core.classList.remove('playing');
 }
 
 function playName(i, onComplete = null) {
@@ -224,11 +222,9 @@ function playName(i, onComplete = null) {
     if (finished) return;
     finished = true;
     if (audio === clip) audio = null;
-    core.classList.remove('playing');
     if (onComplete) onComplete();
   };
   clip.onplaying = () => {
-    core.classList.add('playing');
     markHeard(i);
   };
   clip.onended = finish;
@@ -242,7 +238,6 @@ function playName(i, onComplete = null) {
         utterance.onend = finish; utterance.onerror = finish;
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
-        core.classList.add('playing');
         markHeard(i);
       } catch { finish(); }
     } else finish();
@@ -329,12 +324,6 @@ autoPlayBtn.addEventListener('click', () => {
 /* wheel background click = random spin */
 wheel.addEventListener('click', () => {
   select(Math.floor(Math.random() * N), true);
-});
-/* centre = repeat current name */
-core.addEventListener('click', ev => {
-  ev.stopPropagation();
-  if (autoPlaying) stopAutoPlay('Auto play stopped.', true);
-  playName(current);
 });
 /* keyboard */
 document.addEventListener('keydown', e => {
