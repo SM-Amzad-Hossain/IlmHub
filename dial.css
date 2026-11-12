@@ -105,7 +105,7 @@ button{font:inherit;color:inherit;background:none;border:none}
   z-index:3;font-size:clamp(7.5px,2.3vw,11px);
   color:#ff5a4e;text-shadow:0 0 8px rgba(255,59,48,.95);font-weight:700;
 }
-.lbl:focus-visible,.core:focus-visible,.links a:focus-visible{
+.lbl:focus-visible,.links a:focus-visible{
   outline:2px solid var(--pink);outline-offset:3px;
 }
 
@@ -121,36 +121,7 @@ button{font:inherit;color:inherit;background:none;border:none}
   box-shadow:0 0 10px rgba(255,59,48,.9), 0 0 22px rgba(255,59,48,.45);
 }
 
-/* centre core */
-.core{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:29%;aspect-ratio:1;border-radius:50%;z-index:6;
-  background:radial-gradient(circle at 50% 42%, #1c1220, #08040b 78%);
-  border:1.5px solid rgba(255,255,255,.5);
-  cursor:pointer;display:grid;place-items:center;
-  transition:transform .2s, box-shadow .3s;
-  box-shadow:0 6px 30px rgba(0,0,0,.65), inset 0 0 24px rgba(0,0,0,.7);
-}
-.core:hover{box-shadow:0 0 26px rgba(255,120,110,.25), inset 0 0 24px rgba(0,0,0,.7)}
-.core:active{transform:translate(-50%,-50%) scale(.95)}
-.core .med{width:60%;height:auto;margin-top:4%}
-.core .wv{opacity:.25}
-.core.playing .wv1{animation:wv 1s ease-in-out infinite}
-.core.playing .wv2{animation:wv 1s ease-in-out .25s infinite}
-@keyframes wv{0%,100%{opacity:.15}50%{opacity:1}}
-/* inner red hand points from the centre hub toward the top of the clock */
-.inner-needle{
-  position:absolute;left:50%;top:28%;transform:translateX(-50%);
-  width:clamp(4px,1vw,6px);height:7.5%;z-index:5;pointer-events:none;
-}
-.inner-needle i{
-  display:block;width:100%;height:100%;
-  background:linear-gradient(180deg,#ff7a6e,var(--red) 60%,#d81f14);
-  border-radius:4px;
-  box-shadow:0 0 9px rgba(255,59,48,.95),0 0 18px rgba(255,59,48,.35);
-}
-.core-hint{display:none}
-.core.playing .core-hint{opacity:0}
+
 
 /* ─── name block ─── */
 .name-block{text-align:center;margin-top:28px;width:min(100%,520px)}
