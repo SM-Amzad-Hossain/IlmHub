@@ -299,7 +299,11 @@ function playAutoStep(i, run, advance = false) {
     if (!autoPlaying || run !== autoRun) return;
     autoCount++;
     if (autoCount >= N) {
-      stopAutoPlay('Finished playing all 99 names.');
+      heard.clear();
+      store.set('dial-heard', []);
+      paintStress();
+      autoCount = 0;
+      stopAutoPlay('Finished playing all 99 names. Progress reset.');
       return;
     }
     autoTimer = setTimeout(() => {
