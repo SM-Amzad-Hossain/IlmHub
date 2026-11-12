@@ -564,8 +564,15 @@ section{position:relative}
 .play-all-now .ar{font-family:var(--f-ar);direction:rtl;font-size:22px;text-shadow:0 0 18px rgba(230,196,118,.4)}
 
 @media (max-width:640px){
-  .topbar{flex-wrap:wrap;row-gap:8px;justify-content:center}
+  .topbar{flex-wrap:wrap;row-gap:8px;justify-content:flex-start}
+  .lang-toggle{order:0}
+  .brand{order:1;margin-left:auto}
+  .nav{order:2;flex:1 0 100%;justify-content:center}
   .lang-toggle button{padding:6px 12px;font-size:12.5px}
+}
+@media (max-width:380px){
+  .brand-mark{width:34px;height:34px;font-size:21px}
+  .brand-text b{font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.2s !important}

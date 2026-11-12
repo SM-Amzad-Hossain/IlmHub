@@ -21,8 +21,8 @@ const store = {
 /* ─── 🌐 site language (translate button) ─── */
 let LANG = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
 const fmt = n => (LANG === 'bn' ? toBn(n) : String(n));
-const sayName = t => stripDiacritics(String(t)).replace(/[ʿʾʼ]/g, '').replace(/-/g, ' ').trim();
-let allIdx = -1, lastList = [];
+const localize = (bn, en) => LANG === 'bn' ? bn : en;
+let allIdx = -1, lastList = [], allList = [];
 
 /* toast */
 let toastEl, toastTimer;
@@ -92,6 +92,18 @@ audio.preload = 'auto';
 audio.volume = 1;
 
 let seeking = false;
+let cineLoadRun = 0;
+
+function syncCineControls() {
+  const playLabel = !CINE.started || CINE.scene === 4
+    ? localize('সিনেমাটিক চালান', 'Play cinematic')
+    : CINE.playing ? localize('বিরতি', 'Pause') : localize('চালিয়ে যান', 'Resume');
+  btnPlay.setAttribute('aria-label', playLabel);
+  btnStart.setAttribute('aria-label', localize('সিনেমাটিক চালান', 'Play cinematic'));
+  btnMute.setAttribute('aria-label', audio.muted
+    ? localize('শব্দ চালু করুন', 'Unmute')
+    : localize('শব্দ বন্ধ করুন', 'Mute'));
+}
 
 function showScene(n) {
   CINE.scene = n;
@@ -114,23 +126,28 @@ function showScene(n) {
 
 function setProgress(f) { if (!seeking) fill.style.width = Math.max(0, Math.min(1, f)) * 100 + '%'; }
 
-function playSceneFrom(n, t = 0) {
+function playSceneFrom(n, t = 0, shouldPlay = true) {
+  const run = ++cineLoadRun;
   showScene(n);
   audio.src = CINE.clips[CINE.lang][n - 1];
   const go = () => {
+    if (run !== cineLoadRun) return;
     if (t > 0 && isFinite(audio.duration)) audio.currentTime = Math.min(t, audio.duration - .1);
-    audio.play().catch(() => {});
+    if (shouldPlay) audio.play().catch(() => {});
+    else audio.pause();
   };
   audio.readyState >= 1 ? go() : audio.addEventListener('loadedmetadata', go, { once: true });
-  CINE.playing = true;
-  btnPlay.textContent = '❚❚';
-  stage.classList.remove('paused');
+  CINE.playing = shouldPlay;
+  btnPlay.textContent = shouldPlay ? '❚❚' : '▶';
+  stage.classList.toggle('paused', !shouldPlay);
+  syncCineControls();
 }
 
 function pauseCine() {
   audio.pause(); CINE.playing = false;
   btnPlay.textContent = '▶';
   stage.classList.add('paused');
+  syncCineControls();
 }
 function resumeCine() {
   if (!CINE.started) { startCine(); return; }
@@ -138,6 +155,7 @@ function resumeCine() {
   audio.play().catch(() => {});
   CINE.playing = true; btnPlay.textContent = '❚❚';
   stage.classList.remove('paused');
+  syncCineControls();
 }
 function startCine() {
   try { ac(); } catch {}          // unlock audio on the first user gesture
@@ -149,6 +167,7 @@ function endCine() {
   btnPlay.textContent = '↻';
   audio.removeAttribute('src');
   showScene(4);
+  syncCineControls();
   chime([523.25, 659.25, 783.99]);   // soft closing chime
 }
 
@@ -174,20 +193,10 @@ btnPlay.addEventListener('click', () => {
 btnMute.addEventListener('click', () => {
   audio.muted = !audio.muted;
   btnMute.textContent = audio.muted ? '🔇' : '🔊';
+  syncCineControls();
 });
 
-/* narration language switch */
-$$('.lang-btn').forEach(b => b.addEventListener('click', () => {
-  $$('.lang-btn').forEach(x => x.classList.remove('active'));
-  b.classList.add('active');
-  CINE.lang = b.dataset.lang;
-  if (CINE.started && CINE.scene >= 1 && CINE.scene <= 3) {
-    const t = (audio.currentTime && audio.duration) ? audio.currentTime : 0;
-    const wasPlaying = CINE.playing;
-    playSceneFrom(CINE.scene, t);
-    if (!wasPlaying) pauseCine();
-  }
-}));
+/* Global language controls are wired after applyLang so both groups stay in sync. */
 
 /* seek by clicking progress */
 track.addEventListener('pointerdown', e => {
@@ -199,8 +208,7 @@ track.addEventListener('pointerdown', e => {
   const wasPlaying = CINE.playing;
   const doSeek = () => {
     const d = audio.duration;
-    playSceneFrom(sc, isFinite(d) ? local * d : 0);
-    if (!wasPlaying) pauseCine();
+    playSceneFrom(sc, isFinite(d) ? local * d : 0, wasPlaying);
   };
   if (audio.readyState >= 1 && +audio.dataset.sceneCached === sc) { doSeek(); }
   else {
@@ -370,8 +378,8 @@ function card(i) {
   el.innerHTML =
     `<span class="n-idx">${fmt(i + 1)}</span>` +
     (favs.has(i) ? '<span class="n-fav">★</span>' : '') +
-    `<div class="n-ar">${n.a}</div>` +
-    `<div class="n-tr">${n.t}</div>` +
+    `<div class="n-ar" lang="ar">${n.a}</div>` +
+    `<div class="n-tr" lang="${LANG}">${LANG === 'bn' ? n.b : n.t}</div>` +
     `<div class="n-bn lg-bn">${n.bn}</div>` +
     `<div class="n-en lg-en">${n.e}</div>`;
   return el;
@@ -413,13 +421,16 @@ function openName(i, silent) {
   const n = NAMES[i];
   $('#mNum').textContent = LANG === 'bn' ? `নাম ${fmt(i + 1)}` : `Name ${i + 1}`;
   $('#mArabic').textContent = n.a;
-  $('#mTrans').textContent = n.t;
-  $('#mBn').textContent = `${n.b} — ${n.bn}`;
-  $('#mEn').textContent = `${n.t} — ${n.e}`;
+  $('#mTrans').textContent = LANG === 'bn' ? n.b : n.t;
+  $('#mTrans').lang = LANG;
+  $('#mBn').textContent = n.bn;
+  $('#mBn').lang = 'bn';
+  $('#mEn').textContent = n.e;
+  $('#mEn').lang = 'en';
   const favBtn = $('#mFav');
   favBtn.innerHTML = favs.has(i)
-    ? '★ <span class="bn">পছন্দের</span> <span class="en">Favourite</span>'
-    : '☆ <span class="bn">পছন্দের</span> <span class="en">Favourite</span>';
+    ? '★ <span class="lg-bn">পছন্দের</span><span class="lg-en">Favourite</span>'
+    : '☆ <span class="lg-bn">পছন্দের</span><span class="lg-en">Favourite</span>';
   modal.hidden = false;
   document.body.style.overflow = 'hidden';
   if (!silent) sayNameSpeak(i);          // 🔊 every name pronounces on open
@@ -441,50 +452,36 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hid
 $('#mFav').addEventListener('click', () => {
   favs.has(current) ? favs.delete(current) : favs.add(current);
   saveFavs(); openName(current, true); renderGrid();
-  toast(favs.has(current) ? '★ পছন্দের তালিকায় যোগ হলো' : '☆ পছন্দের তালিকা থেকে সরানো হলো');
+  toast(favs.has(current)
+    ? (LANG === 'bn' ? '★ পছন্দের তালিকায় যোগ হলো' : '★ Added to favourites')
+    : (LANG === 'bn' ? '☆ পছন্দের তালিকা থেকে সরানো হলো' : '☆ Removed from favourites'));
 });
 
 /* speak a name (Web Speech API) */
-function speak(text, lang = 'en-US', onend) {
+function speak(text, lang = (LANG === 'bn' ? 'bn-BD' : 'en-US'), onend) {
   if (!onend && allIdx >= 0) { try { stopAll(true); } catch {} }   // manual speech interrupts “play all”
-  if (!('speechSynthesis' in window)) { toast('এই ব্রাউজারে উচ্চারণ সুবিধা নেই · TTS unavailable'); return; }
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    toast(LANG === 'bn' ? 'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই' : 'Speech is unavailable in this browser');
+    if (onend) onend();
+    return;
+  }
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(String(text).replace(/[ʿʾʼ]/g, '').replace(/-/g, ' ').trim());
     u.lang = lang; u.rate = .85; u.pitch = 1;
-    const vs = speechSynthesis.getVoices();
-    const v = vs.find(v => v.lang.replace('_', '-').toLowerCase().startsWith(lang.slice(0, 2)))
-          || vs.find(v => v.lang.toLowerCase().startsWith('en'));
-    if (v) u.voice = v;
+    const prefix = lang.replace('_', '-').slice(0, 2).toLowerCase();
+    const vs = speechSynthesis.getVoices?.() || [];
+    const v = vs.find(v => v.lang.replace('_', '-').toLowerCase().startsWith(prefix));
+    if (v) { u.voice = v; u.lang = v.lang.replace('_', '-'); }
     if (onend) { u.onend = () => onend(); u.onerror = () => onend(); }
     speechSynthesis.speak(u);
-  } catch { onend && onend(); }
+  } catch { if (onend) onend(); }
 }
 
-/* ── real voice clips for the 99 names (fallback → browser TTS) ── */
-let nameClip = null;
-function stopNameClip() {
-  if (nameClip) { try { nameClip.pause(); nameClip.removeAttribute('src'); } catch {} nameClip = null; }
-}
-function playNameClip(i, onend) {
-  const a = new Audio(`assets/audio/names/n${String(i + 1).padStart(2, '0')}.mp3`);
-  nameClip = a;
-  let done = false;
-  const finish = (tts) => {
-    if (done) return; done = true;
-    const mine = nameClip === a;
-    if (mine) nameClip = null;
-    if (tts) { if (mine) speak(sayName(NAMES[i].t), 'en-US', onend); }
-    else onend && onend();
-  };
-  a.onended = () => finish(false);
-  a.onerror = () => finish(true);
-  a.play().catch(() => finish(true));
-}
+/* speak a name in the selected site language */
 function sayNameSpeak(i, onend) {
-  if (!onend && allIdx >= 0) { try { stopAll(true); } catch {} }   // manual speech interrupts “play all”
-  stopNameClip();
-  playNameClip(i, onend);
+  const n = NAMES[i];
+  speak(LANG === 'bn' ? n.b : n.t, LANG === 'bn' ? 'bn-BD' : 'en-US', onend);
 }
 $('#mSpeak').addEventListener('click', () => sayNameSpeak(current));
 
@@ -500,12 +497,12 @@ const PHRASE_EN = [
   'O Allah, send blessings upon Muhammad'
 ];
 const PHRASES = [
-  { ar:'سُبْحَانَ ٱللَّهِ',        tr:'Subhānallāh',        bn:'আল্লাহ পবিত্র' },
-  { ar:'ٱلْحَمْدُ لِلَّهِ',       tr:'Alḥamdulillāh',      bn:'সকল প্রশংসা আল্লাহর জন্য' },
-  { ar:'ٱللَّهُ أَكْبَرُ',        tr:'Allāhu akbar',       bn:'আল্লাহই সর্বশ্রেষ্ঠ' },
-  { ar:'أَسْتَغْفِرُ ٱللَّهَ',    tr:'Astaghfirullāh',     bn:'আল্লাহর নিকট ক্ষমা চাই' },
-  { ar:'لَا إِلَٰهَ إِلَّا ٱللَّهُ', tr:'Lā ilāha illallāh', bn:'আল্লাহ ছাড়া অন্য কোনো উপাস্য নেই' },
-  { ar:'ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', tr:'Allāhumma ṣalli ʿalā Muḥammad', bn:'নবীজির উপর সালাত পাঠ' }
+  { ar:'سُبْحَانَ ٱللَّهِ',        tr:'Subhānallāh',        bnTr:'সুবহানাল্লাহ',                  bn:'আল্লাহ পবিত্র' },
+  { ar:'ٱلْحَمْدُ لِلَّهِ',       tr:'Alḥamdulillāh',      bnTr:'আলহামদুলিল্লাহ',                bn:'সকল প্রশংসা আল্লাহর জন্য' },
+  { ar:'ٱللَّهُ أَكْبَرُ',        tr:'Allāhu akbar',       bnTr:'আল্লাহু আকবার',                  bn:'আল্লাহই সর্বশ্রেষ্ঠ' },
+  { ar:'أَسْتَغْفِرُ ٱللَّهَ',    tr:'Astaghfirullāh',     bnTr:'আস্তাগফিরুল্লাহ',                bn:'আল্লাহর নিকট ক্ষমা চাই' },
+  { ar:'لَا إِلَٰهَ إِلَّا ٱللَّهُ', tr:'Lā ilāha illallāh', bnTr:'লা ইলাহা ইল্লাল্লাহ',             bn:'আল্লাহ ছাড়া অন্য কোনো উপাস্য নেই' },
+  { ar:'ٱللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ', tr:'Allāhumma ṣalli ʿalā Muḥammad', bnTr:'আল্লাহুম্মা সাল্লি আলা মুহাম্মদ', bn:'নবীজির উপর সালাত পাঠ' }
 ];
 
 const tState = store.get('asma-tasbih', { count: 0, target: 33, laps: 0, phrase: 0 });
@@ -524,9 +521,14 @@ function paintTasbih() {
   $$('#targetRow .chip').forEach(c => c.classList.toggle('active', +c.dataset.target === tState.target));
   const p = PHRASES[tState.phrase] || PHRASES[0];
   $('#phraseAr').textContent = p.ar;
-  $('#phraseTr').textContent = p.tr;
+  $('#phraseTr').textContent = LANG === 'bn' ? p.bnTr : p.tr;
+  $('#phraseTr').lang = LANG;
   $('#phraseBn').textContent = LANG === 'bn' ? p.bn : (PHRASE_EN[tState.phrase] || p.tr);
-  $$('#phrasePicker .chip').forEach((c, i) => c.classList.toggle('active', i === tState.phrase));
+  $('#phraseBn').lang = LANG;
+  $$('#phrasePicker .chip').forEach((c, i) => {
+    c.textContent = LANG === 'bn' ? PHRASES[i].bnTr : PHRASES[i].tr;
+    c.classList.toggle('active', i === tState.phrase);
+  });
 }
 
 /* phrase picker */
@@ -540,8 +542,9 @@ PHRASES.forEach((p, i) => {
 });
 
 $('#btnPhrase').addEventListener('click', () => {
-  const p = PHRASES[tState.phrase];
-  speak(sayName(p.tr));
+  const p = PHRASES[tState.phrase] || PHRASES[0];
+  const text = LANG === 'bn' ? p.bn : (PHRASE_EN[tState.phrase] || p.tr);
+  speak(text, LANG === 'bn' ? 'bn-BD' : 'en-US');
 });
 
 /* targets */
@@ -576,7 +579,7 @@ $('#btnReset').addEventListener('click', () => {
   tState.count = 0; tState.laps = 0;
   store.set('asma-tasbih', tState);
   paintTasbih();
-  toast('↺ কাউন্টার রিসেট হয়েছে · Counter reset');
+  toast(LANG === 'bn' ? '↺ কাউন্টার রিসেট হয়েছে' : '↺ Counter reset');
 });
 
 paintTasbih();
@@ -585,26 +588,56 @@ paintTasbih();
    🌐 SITE LANGUAGE — translate button (বাংলা ⇄ English)
    ═══════════════════════════════════════════════════════════ */
 function applyLang() {
+  document.documentElement.lang = LANG;
   document.documentElement.dataset.lang = LANG;
+  document.title = localize('৯৯ সুন্দর নাম · আল্লাহর নামের ধিকর', 'The 99 Beautiful Names of Allah');
+  $('#pageDescription').content = localize(
+    'আল্লাহর ৯৯টি সুন্দর নাম, বাংলা অর্থ, ধিকর ও তসবিহ কাউন্টার।',
+    'Explore the 99 Beautiful Names of Allah with meanings, dhikr and a tasbih counter.'
+  );
+  CINE.lang = LANG;
+  $$('.lang-toggle').forEach(group => group.setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language')));
   $$('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.ui === LANG));
-  $('#search').placeholder = LANG === 'bn'
-    ? 'খুঁজুন…  যেমন: রহমান / Rahman / merciful'
-    : 'Search… e.g. Rahman / mercy / রহমান';
+  $$('.lang-switch').forEach(group => group.setAttribute('aria-label', localize('সাইট ও বর্ণনার ভাষা', 'Site and narration language')));
+  $$('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
+  $('#search').placeholder = localize(
+    'খুঁজুন… যেমন: রহমান / Rahman / merciful',
+    'Search… e.g. Rahman / mercy / রহমান'
+  );
   $$('#targetRow .chip').forEach(c => { c.textContent = fmt(+c.dataset.target); });
+  $('#tapArea').setAttribute('aria-label', localize('তসবিহ গণনা করুন', 'Count a dhikr'));
+  $('img[alt]').alt = localize('প্রার্থনার জপমালা', 'Prayer beads');
+  $('#modal .modal-close').setAttribute('aria-label', localize('বন্ধ করুন', 'Close'));
+  syncCineControls();
   renderGrid();
   paintTasbih();
   showScene(CINE.scene);
-  if (!modal.hidden) $('#mNum').textContent = LANG === 'bn' ? `নাম ${fmt(current + 1)}` : `Name ${current + 1}`;
-  const nb = $$('.lang-btn').find(b => b.dataset.lang === LANG);
-  if (nb && !nb.classList.contains('active')) nb.click();   // narration follows the site language
+  if (!modal.hidden) openName(current, true);
   store.set('asma-lang', LANG);
 }
-$$('.lang-toggle button').forEach(b => b.addEventListener('click', () => {
-  if (b.dataset.ui === LANG) return;
-  LANG = b.dataset.ui;
+
+function setLanguage(next, notify = false) {
+  next = next === 'en' ? 'en' : 'bn';
+  if (next === LANG) return;
+  const scene = CINE.scene;
+  const wasPlaying = CINE.playing;
+  const time = audio.currentTime && audio.duration ? audio.currentTime : 0;
+  const restartNarration = CINE.started && scene >= 1 && scene <= 3;
+  LANG = next;
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  if (allIdx >= 0) stopAll(true);
   applyLang();
-  toast(LANG === 'bn' ? '🌐 ভাষা: বাংলা' : '🌐 Language: English');
-}));
+  if (restartNarration) playSceneFrom(scene, time, wasPlaying);
+  if (notify) toast(localize('🌐 ভাষা: বাংলা', '🌐 Language: English'));
+}
+
+$$('.lang-toggle button').forEach(b => b.addEventListener('click', () => setLanguage(b.dataset.ui, true)));
+$$('.lang-btn').forEach(b => b.addEventListener('click', () => setLanguage(b.dataset.lang, true)));
+window.addEventListener('storage', e => {
+  if (e.key !== 'asma-lang') return;
+  const nextLang = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
+  if (nextLang !== LANG) setLanguage(nextLang);
+});
 
 /* ═══════════════════════════════════════════════════════════
    🔊 PLAY ALL NAMES — every one of the 99 pronounced in order
@@ -615,7 +648,6 @@ const nowEl      = $('#playAllNow');
 
 function stopAll(silent) {
   if ('speechSynthesis' in window) speechSynthesis.cancel();
-  try { stopNameClip(); } catch {}
   allIdx = -1;
   nowEl.textContent = '';
   btnStopAll.hidden = true;
@@ -631,7 +663,7 @@ function playNextName() {
   }
   const i = allList[allIdx];
   const n = NAMES[i];
-  nowEl.innerHTML = `<span class="idx">${fmt(i + 1)}/${fmt(allList.length)}</span><span class="ar">${n.a}</span>${n.t}`;
+  nowEl.innerHTML = `<span class="idx">${fmt(i + 1)}/${fmt(allList.length)}</span><span class="ar">${n.a}</span>${LANG === 'bn' ? n.b : n.t}`;
   sayNameSpeak(i, () => {
     if (allIdx < 0) return;
     allIdx++;
@@ -639,7 +671,10 @@ function playNextName() {
   });
 }
 btnAll.addEventListener('click', () => {
-  if (!('speechSynthesis' in window)) { toast('এই ব্রাউজারে উচ্চারণ সুবিধা নেই · TTS unavailable'); return; }
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    toast(LANG === 'bn' ? 'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই' : 'Speech is unavailable in this browser');
+    return;
+  }
   allList = lastList.length ? [...lastList] : NAMES.map((_, i) => i);
   if (!allList.length) return;
   allIdx = 0;

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="bn" data-lang="bn">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>99 Names of Allah — The Dial · ৯৯ নামের ঘড়ি</title>
+<title>আল্লাহর ৯৯টি সুন্দর নাম · ডায়াল</title>
+<meta id="pageDescription" name="description" content="আল্লাহর ৯৯টি সুন্দর নাম, বাংলা উচ্চারণ ও অর্থসহ ইন্টার‌্যাকটিভ ডায়াল।" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Marcellus&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -11,11 +12,22 @@
 </head>
 <body>
 
+<nav class="site-nav" aria-label="সাইট নেভিগেশন">
+  <div class="lang-toggle" role="group" aria-label="ওয়েবসাইটের ভাষা">
+    <button type="button" data-ui="bn" class="active">বাংলা</button>
+    <button type="button" data-ui="en">EN</button>
+  </div>
+  <a class="home-link" href="index.html">
+    <span class="lg-bn">← মূল সাইট</span>
+    <span class="lg-en">← Main site</span>
+  </a>
+</nav>
+
 <header class="hd">
-  <h1>99 NAMES OF ALLAH</h1>
+  <h1><span class="lg-bn">আল্লাহর ৯৯টি সুন্দর নাম</span><span class="lg-en">99 NAMES OF ALLAH</span></h1>
   <div class="stress-row">
-    <span class="s-label">STRESS</span>
-    <span class="s-val" id="stressVal">99</span>
+    <span class="s-label"><span class="lg-bn">বাকি</span><span class="lg-en">REMAINING</span></span>
+    <span class="s-val" id="stressVal">৯৯</span>
   </div>
   <div class="bar" aria-hidden="true">
     <div class="fill" id="stressFill"></div>
@@ -30,23 +42,19 @@
     <div class="ticks" id="ticks" aria-hidden="true"></div>
 
     <!-- rotating wheel of 99 names -->
-    <div class="wheel" id="wheel" role="group" aria-label="99-name clock face"></div>
+    <div class="wheel" id="wheel" role="group" aria-label="৯৯টি নামের ডায়াল"></div>
   </div>
   <div class="clock-name" aria-live="polite" aria-atomic="true">
-    <div class="nm" id="nm" lang="en" dir="ltr">Al-Quddūs</div>
-    <div class="mn" id="mn" lang="en" dir="ltr">The Most Holy</div>
+    <div class="nm" id="nm" lang="bn" dir="ltr">আল-কুদ্দুস</div>
+    <div class="mn" id="mn" lang="bn" dir="ltr">পবিত্রতম</div>
   </div>
 </main>
 
 <section class="name-block">
-  <div class="mn-bn" id="mnBn">পবিত্রতম</div>
-  <div class="motto">SAY IT IN YOUR HEART</div>
+  <div class="motto"><span class="lg-bn">মনে মনে উচ্চারণ করুন</span><span class="lg-en">SAY IT IN YOUR HEART</span></div>
   <div class="auto-controls">
-    <button class="auto-play" id="autoPlayBtn" type="button" aria-pressed="false">▶ Auto Play 99 Names</button>
-    <p class="auto-status" id="autoStatus" role="status" aria-live="polite">Starts from the selected name</p>
-  </div>
-  <div class="links">
-    <a href="index.html">← <span class="lg-bn">মূল সাইট</span><span class="lg-en">Main site</span></a>
+    <button class="auto-play" id="autoPlayBtn" type="button" aria-pressed="false">▶ ৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন</button>
+    <p class="auto-status" id="autoStatus" role="status" aria-live="polite">নির্বাচিত নাম থেকে শুরু হবে</p>
   </div>
   <p class="hint">
     <span class="lg-bn">ঘড়ির বৃত্তে চাপ দাও — ইচ্ছেমতো নামে ঘুরবে; কোনো নামে চাপ দিলে সেটাই বাছাই হবে।</span>

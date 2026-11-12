@@ -1,136 +1,139 @@
 /* ═══ 99 Names of Allah — the dial ═══ */
 'use strict';
 
-/* [transliteration, Arabic name, বাংলা অর্থ, English meaning] */
+/* [English transliteration, Arabic name, বাংলা transliteration, বাংলা অর্থ, English meaning] */
 const D = [
-['Ar-Rahmān','ٱلرَّحْمَٰنُ','পরম করুণাময়','The Most Gracious'],
-['Ar-Rahīm','ٱلرَّحِيمُ','অতি দয়ালু','The Most Merciful'],
-['Al-Malik','ٱلْمَلِكُ','সার্বভৌম রাজা','The King, The Sovereign'],
-['Al-Quddūs','ٱلْقُدُّوسُ','পবিত্রতম','The Most Holy'],
-['As-Salām','ٱلسَّلَامُ','শান্তির উৎস','The Source of Peace'],
-['Al-Mu’min','ٱلْمُؤْمِنُ','নিরাপত্তা ও বিশ্বাস প্রদানকারী','The Granter of Security'],
-['Al-Muhaymin','ٱلْمُهَيْمِنُ','রক্ষাকারী ও পর্যবেক্ষক','The Guardian, The Overseer'],
-['Al-ʿAzīz','ٱلْعَزِيزُ','পরাক্রমশালী','The Almighty, The Mighty'],
-['Al-Jabbār','ٱلْجَبَّارُ','প্রবল ও জবরদস্তির স্বামী','The Compeller, The Omnipotent'],
-['Al-Mutakabbir','ٱلْمُتَكَبِّرُ','মহান ও উন্নত','The Supreme, The Majestic'],
-['Al-Khāliq','ٱلْخَالِقُ','সৃষ্টিকর্তা','The Creator'],
-['Al-Bāriʾ','ٱلْبَارِئُ','সৃষ্টি রচয়িতা','The Maker, The Evolver'],
-['Al-Muṣawwir','ٱلْمُصَوِّرُ','আকৃতিদাতা','The Fashioner, The Designer'],
-['Al-Ghaffār','ٱلْغَفَّارُ','পরম ক্ষমাকারী','The Absolute Forgiver'],
-['Al-Qahhār','ٱلْقَهَّارُ','সর্বজয়ী','The Subduer, The Vanquisher'],
-['Al-Wahhāb','ٱلْوَهَّابُ','নিঃশর্ত প্রদানকারী','The Supreme Bestower'],
-['Ar-Razzāq','ٱلرَّزَّاقُ','রিজিকদাতা, সরবরাহকারী','The Provider, The Sustainer'],
-['Al-Fattāḥ','ٱلْفَتَّاحُ','বিজয় ও সমাধানের দ্বার খোলারকারী','The Opener, The Judge'],
-['Al-ʿAlīm','ٱلْعَلِيمُ','সর্বজ্ঞ','The All-Knowing'],
-['Al-Qābiḍ','ٱلْقَابِضُ','সংকুচিতকারী, রোধকারী','The Withholder, The Restrainer'],
-['Al-Bāsiṭ','ٱلْبَاسِطُ','প্রসারিতকারী, প্রদানকারী','The Extender, The Expander'],
-['Al-Khāfiḍ','ٱلْخَافِضُ','অবনতিকারী, নত করারকারী','The Abaser, The Reducer'],
-['Ar-Rāfiʿ','ٱلرَّافِعُ','উন্নীতকারী, মর্যাদা দানকারী','The Exalter, The Elevator'],
-['Al-Muʿizz','ٱلْمُعِزُّ','সম্মান প্রদানকারী','The Giver of Honour'],
-['Al-Muḏill','ٱلْمُذِلُّ','অপমানকারী, লাঞ্ছিতকারী','The Giver of Dishonour'],
-['As-Samīʿ','ٱلسَّمِيعُ','সর্বশ্রোতা','The All-Hearing'],
-['Al-Baṣīr','ٱلْبَصِيرُ','সর্বদর্শী','The All-Seeing'],
-['Al-Ḥakam','ٱلْحَكَمُ','বিচারক, সিদ্ধান্তদাতা','The Judge, The Arbitrator'],
-['Al-ʿAdl','ٱلْعَدْلُ','ন্যায়পরায়ণ','The Absolutely Just'],
-['Al-Laṭīf','ٱللَّطِيفُ','সূক্ষ্ম ও সদয়','The Subtly Kind, The Gentle'],
-['Al-Khabīr','ٱلْخَبِيرُ','সুবিজ্ঞ','The All-Aware'],
-['Al-Ḥalīm','ٱلْحَلِيمُ','ধৈর্যশীল, ক্ষমাশীল','The Forbearing, The Indulgent'],
-['Al-ʿAẓīm','ٱلْعَظِيمُ','মহান ও চিরমহিমান্বিত','The Most Great, The Magnificent'],
-['Al-Ghafūr','ٱلْغَفُورُ','প্রায়শ ক্ষমাকারী','The Oft-Forgiving'],
-['Ash-Shakūr','ٱلشَّكُورُ','কৃতজ্ঞ, পুরস্কার বাড়ানোরকারী','The Appreciative, The Grateful'],
-['Al-ʿAliyy','ٱلْعَلِيُّ','সর্বোচ্চ, চিরউন্নত','The Most High, The Sublime'],
-['Al-Kabīr','ٱلْكَبِيرُ','সর্বমহান','The Greatest, The Most Great'],
-['Al-Ḥafīẓ','ٱلْحَفِيظُ','রক্ষাকারী, সংরক্ষক','The Preserver, The Protector'],
-['Al-Muqīt','ٱلْمُقِيتُ','পুষ্টিদাতা, রক্ষক','The Nourisher, The Feeder'],
-['Al-Ḥasīb','ٱلْحَسِيبُ','হিসাবকর্তা, যথেষ্টকারী','The Ever-Reckoner, The Sufficient'],
-['Al-Jalīl','ٱلْجَلِيلُ','মহিমান্বিত','The Majestic, The Grand'],
-['Al-Karīm','الْكَرِيمُ','দানশীল, মহান','The Most Generous, The Noble'],
-['Ar-Raqīb','ٱلرَّقِيبُ','নজরদার, পর্যবেক্ষক','The Watchful, The Observer'],
-['Al-Mujīb','ٱلْمُجِيبُ','দোয়া কবুলকারী','The Responsive, The Answerer'],
-['Al-Wāsiʿ','ٱلْوَاسِعُ','বিস্তৃত, সর্বব্যাপী','The Vast, The All-Encompassing'],
-['Al-Ḥakīm','ٱلْحَكِيمُ','প্রজ্ঞাবান','The Most Wise'],
-['Al-Wadūd','ٱلْوَدُودُ','অতি স্নেহশীল','The Most Loving, The Affectionate'],
-['Al-Majīd','ٱلْمَجِيدُ','মহিমান্বিত, সম্মানিত','The Most Glorious, The Illustrious'],
-['Al-Bāʿiṯ','ٱلْبَاعِثُ','পুনরুত্থানদাতা','The Resurrector, The Awakener'],
-['Ash-Shahīd','ٱلشَّهِيدُ','সর্বসাক্ষী','The Witness, The Testifier'],
-['Al-Ḥaqq','ٱلْحَقُّ','সত্য ও প্রকৃত','The Absolute Truth, The Reality'],
-['Al-Wakīl','ٱلْوَكِيلُ','নির্ভরযোগ্য পৃষ্ঠপোষক','The Trustee, The Guardian'],
-['Al-Qawiyy','ٱلْقَوِيُّ','পরাক্রমশালী','The All-Strong'],
-['Al-Matīn','ٱلْمَتِينُ','দৃঢ় ও অটল','The Firm, The Steadfast'],
-['Al-Waliyy','ٱلْوَلِيُّ','বন্ধু ও অভিভাবক','The Protecting Friend, The Helper'],
-['Al-Ḥamīd','ٱلْحَمِيدُ','সকল প্রশংসার যোগ্য','The All-Praiseworthy'],
-['Al-Muḥsī','ٱلْمُحْصِىُ','গণক, পরিমাপকারী','The Accounter, The Numberer'],
-['Al-Mubdiʾ','ٱلْمُبْدِئُ','সূচনাকারী, উদ্ভাবক','The Originator, The Initiator'],
-['Al-Muʿīd','ٱلْمُعِيدُ','পুনরুদ্ধারকারী','The Restorer, The Reinstate'],
-['Al-Muḥyī','ٱلْمُحْيِي','জীবনদাতা','The Giver of Life'],
-['Al-Mumīt','ٱلْمُمِيتُ','মৃত্যুদাতা','The Bringer of Death'],
-['Al-Ḥayy','ٱلْحَىُّ','চিরজীবী','The Ever-Living'],
-['Al-Qayyūm','ٱلْقَيُّومُ','স্বয়ংস্থিত, নিজেই সমর্থ','The Self-Subsisting, The Sustainer'],
-['Al-Wājid','ٱلْوَاجِدُ','পাওয়া যায় এমন, লাভকারী','The Perceiver, The Finder'],
-['Al-Mājid','ٱلْمَاجِدُ','মহিমাময়, সম্মানজনক','The Illustrious, The Magnificent'],
-['Al-Wāḥid','ٱلْوَاحِدُ','একক, অদ্বিতীয়','The One, The Unique'],
-['Al-ʾAḥad','ٱلْأَحَدُ','সম্পূর্ণ একক, অবিভাজ্য','The One, The Indivisible'],
-['Aṣ-Ṣamad','ٱلصَّمَدُ','চিরস্থায়ী, সর্বনির্ভর','The Eternal Refuge, The Self-Sufficient'],
-['Al-Qādir','ٱلْقَادِرُ','সর্বশক্তিমান','The All-Powerful'],
-['Al-Muqtadir','ٱلْمُقْتَدِرُ','সর্ব-নির্ধারক, প্রবল','The All-Dominant, The Determiner'],
-['Al-Muqaddim','ٱلْمُقَدِّمُ','অগ্রসারক, এগিয়ে আনারকারী','The Expediter, He Who Brings Forward'],
-['Al-Muʾakhkhir','ٱلْمُؤَخِّرُ','বিলম্বকারী, পশ্চাদসারক','The Delayer, He Who Puts Far Away'],
-['Al-ʾAwwal','ٱلْأَوَّلُ','প্রথম, আদিহীন','The First, The Beginning-less'],
-['Al-ʾĀkhir','اَلْآخِرُ','শেষ, চিরন্তন','The Last, The Endless'],
-['Aẓ-Ẓāhir','ٱلظَّاهِرُ','প্রকাশিত, বাহ্য','The Manifest, The Evident'],
-['Al-Bāṭin','ٱلْبَاطِنُ','গোপন, অন্তর্নিহিত','The Hidden, The Inner'],
-['Al-Wali','ٱلْوَالِي','পৃষ্ঠপোষক, শাসনকর্তা','The Patron, The Governing Lord'],
-['Al-Mutaʿālī','ٱلْمُتَعَالِي','সর্বোচ্চ মহিমান্বিত','The Supremely Exalted'],
-['Al-Barr','ٱلْبَرُّ','উপকারী, দয়ার উৎস','The Source of Goodness, The Beneficent'],
-['At-Tawwāb','ٱلتَّوَّابُ','অনুতপ্ত গ্রহণকারী','The Ever-Accepting of Repentance'],
-['Al-Muntaqim','ٱلْمُنْتَقِمُ','অত্যাচারীর প্রতিশোধী','The Avenger of the Wrong'],
-['Al-ʿAfuww','اَلْعَفُوُّ','ক্ষমাকারী, মুছে দেয় এমন','The Pardoner, The Effacer'],
-['Ar-Raʾūf','اَلرَّؤُوفُ','অতি সদয়, করুণাময়','The Very Kind, The Compassionate'],
-['Mālik al-Mulk','مَـٰلِكُ ٱلْمُلْكِ','রাজ্যের স্বামী','The Owner of All Sovereignty'],
-['Ḏhū l-Jalāli wa-l-ʾIkrām','ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ','মহিমা ও সম্মানের ধনী','The Lord of Majesty and Honour'],
-['Al-Muqsiṭ','اَلْمُقْسِطُ','ন্যায়পরায়ণ, সুষম বিচারকারী','The Equitable, The Just'],
-['Al-Jāmiʿ','اَلْجَامِعُ','সমবেতকারী, ঐক্য সাধনকারী','The Gatherer, The Unifier'],
-['Al-Ghāniyy','ٱلْغَنِيُّ','অভাবহীন, স্বয়ংসম্পন্ন','The Self-Sufficient, The Rich'],
-['Al-Mughniyy','اَلْمُغْنِيُّ','সমৃদ্ধকারী, মুক্তিদাতা','The Enricher, The Emancipator'],
-['Al-Māniʿ','اَلْمَانِعُ','প্রতিরোধক, বাধাদাতা','The Preventer, The Withholder'],
-['Aḍ-Ḍār','اَلضَّارُ','পরীক্ষার জন্য ক্ষতিকর','The Distressor, The Harm-Bringer'],
-['An-Nāfiʿ','اَلنَّافِعُ','উপকারী, কল্যাণকারী','The Benefactor, The Source of Good'],
-['An-Nūr','اَلنُّورُ','আলো','The Light'],
-['Al-Hādī','اَلْهَادِي','পথপ্রদর্শক','The Guide, The Way'],
-['Al-Badīʿ','اَلْبَدِيعُ','অনন্য সৃষ্টিকর্তা, অতুলনীয়','The Originator, The Incomparable'],
-['Al-Bāqī','اَلْبَاقِي','চিরস্থায়ী, অনন্ত','The Everlasting, The Infinite'],
-['Al-Wāriṯ','اَلْوَارِثُ','উত্তরাধিকারী','The Heir, The Inheritor of All'],
-['Ar-Rashīd','اَلرَّشِيدُ','সঠিক পথের পথপ্রদর্শক','The Guide to the Right Path'],
-['Aṣ-Ṣabūr','اَلصَّبُورُ','অত্যন্ত ধৈর্যশীল','The Patient, The Timeless']
+['Ar-Rahmān','ٱلرَّحْمَٰنُ','আর-রহমান','পরম করুণাময়','The Most Gracious'],
+['Ar-Rahīm','ٱلرَّحِيمُ','আর-রহীম','অতি দয়ালু','The Most Merciful'],
+['Al-Malik','ٱلْمَلِكُ','আল-মালিক','সার্বভৌম রাজা','The King, The Sovereign'],
+['Al-Quddūs','ٱلْقُدُّوسُ','আল-কুদ্দুস','পবিত্রতম','The Most Holy'],
+['As-Salām','ٱلسَّلَامُ','আস-সালাম','শান্তির উৎস','The Source of Peace'],
+['Al-Mu’min','ٱلْمُؤْمِنُ','আল-মু’মিন','নিরাপত্তা ও বিশ্বাস প্রদানকারী','The Granter of Security'],
+['Al-Muhaymin','ٱلْمُهَيْمِنُ','আল-মুহাইমিন','রক্ষাকারী ও পর্যবেক্ষক','The Guardian, The Overseer'],
+['Al-ʿAzīz','ٱلْعَزِيزُ','আল-আজিজ','পরাক্রমশালী','The Almighty, The Mighty'],
+['Al-Jabbār','ٱلْجَبَّارُ','আল-জব্বার','প্রবল ও জবরদস্তির স্বামী','The Compeller, The Omnipotent'],
+['Al-Mutakabbir','ٱلْمُتَكَبِّرُ','আল-মুতাকাব্বির','মহান ও উন্নত','The Supreme, The Majestic'],
+['Al-Khāliq','ٱلْخَالِقُ','আল-খালিক','সৃষ্টিকর্তা','The Creator'],
+['Al-Bāriʾ','ٱلْبَارِئُ','আল-বারি’','সৃষ্টি রচয়িতা','The Maker, The Evolver'],
+['Al-Muṣawwir','ٱلْمُصَوِّرُ','আল-মুসাওয়ির','আকৃতিদাতা','The Fashioner, The Designer'],
+['Al-Ghaffār','ٱلْغَفَّارُ','আল-গাফফার','পরম ক্ষমাকারী','The Absolute Forgiver'],
+['Al-Qahhār','ٱلْقَهَّارُ','আল-কাহহার','সর্বজয়ী','The Subduer, The Vanquisher'],
+['Al-Wahhāb','ٱلْوَهَّابُ','আল-ওয়াহহাব','নিঃশর্ত প্রদানকারী','The Supreme Bestower'],
+['Ar-Razzāq','ٱلرَّزَّاقُ','আর-রয্জাক','রিজিকদাতা, সরবরাহকারী','The Provider, The Sustainer'],
+['Al-Fattāḥ','ٱلْفَتَّاحُ','আল-ফাত্তাহ','বিজয় ও সমাধানের দ্বার খোলারকারী','The Opener, The Judge'],
+['Al-ʿAlīm','ٱلْعَلِيمُ','আল-আলিম','সর্বজ্ঞ','The All-Knowing'],
+['Al-Qābiḍ','ٱلْقَابِضُ','আল-কাবিদ','সংকুচিতকারী, রোধকারী','The Withholder, The Restrainer'],
+['Al-Bāsiṭ','ٱلْبَاسِطُ','আল-বাসিত','প্রসারিতকারী, প্রদানকারী','The Extender, The Expander'],
+['Al-Khāfiḍ','ٱلْخَافِضُ','আল-খাফিদ','অবনতিকারী, নত করারকারী','The Abaser, The Reducer'],
+['Ar-Rāfiʿ','ٱلرَّافِعُ','আর-রাফি’','উন্নীতকারী, মর্যাদা দানকারী','The Exalter, The Elevator'],
+['Al-Muʿizz','ٱلْمُعِزُّ','আল-মু’যিৎ','সম্মান প্রদানকারী','The Giver of Honour'],
+['Al-Muḏill','ٱلْمُذِلُّ','আল-মুযিল্ল','অপমানকারী, লাঞ্ছিতকারী','The Giver of Dishonour'],
+['As-Samīʿ','ٱلسَّمِيعُ','আস-সামি’','সর্বশ্রোতা','The All-Hearing'],
+['Al-Baṣīr','ٱلْبَصِيرُ','আল-বাসির','সর্বদর্শী','The All-Seeing'],
+['Al-Ḥakam','ٱلْحَكَمُ','আল-হাকাম','বিচারক, সিদ্ধান্তদাতা','The Judge, The Arbitrator'],
+['Al-ʿAdl','ٱلْعَدْلُ','আল-আদল','ন্যায়পরায়ণ','The Absolutely Just'],
+['Al-Laṭīf','ٱللَّطِيفُ','আল-লাতিফ','সূক্ষ্ম ও সদয়','The Subtly Kind, The Gentle'],
+['Al-Khabīr','ٱلْخَبِيرُ','আল-খাবির','সুবিজ্ঞ','The All-Aware'],
+['Al-Ḥalīm','ٱلْحَلِيمُ','আল-হালিম','ধৈর্যশীল, ক্ষমাশীল','The Forbearing, The Indulgent'],
+['Al-ʿAẓīm','ٱلْعَظِيمُ','আল-আজিম','মহান ও চিরমহিমান্বিত','The Most Great, The Magnificent'],
+['Al-Ghafūr','ٱلْغَفُورُ','আল-গাফুর','প্রায়শ ক্ষমাকারী','The Oft-Forgiving'],
+['Ash-Shakūr','ٱلشَّكُورُ','আশ-শাকুর','কৃতজ্ঞ, পুরস্কার বাড়ানোরকারী','The Appreciative, The Grateful'],
+['Al-ʿAliyy','ٱلْعَلِيُّ','আল-আলিয়্য','সর্বোচ্চ, চিরউন্নত','The Most High, The Sublime'],
+['Al-Kabīr','ٱلْكَبِيرُ','আল-কাবীর','সর্বমহান','The Greatest, The Most Great'],
+['Al-Ḥafīẓ','ٱلْحَفِيظُ','আল-হাফিজ','রক্ষাকারী, সংরক্ষক','The Preserver, The Protector'],
+['Al-Muqīt','ٱلْمُقِيتُ','আল-মুকীত','পুষ্টিদাতা, রক্ষক','The Nourisher, The Feeder'],
+['Al-Ḥasīb','ٱلْحَسِيبُ','আল-হাসিব','হিসাবকর্তা, যথেষ্টকারী','The Ever-Reckoner, The Sufficient'],
+['Al-Jalīl','ٱلْجَلِيلُ','আল-জলিল','মহিমান্বিত','The Majestic, The Grand'],
+['Al-Karīm','الْكَرِيمُ','আল-কারিম','দানশীল, মহান','The Most Generous, The Noble'],
+['Ar-Raqīb','ٱلرَّقِيبُ','আর-রাকীব','নজরদার, পর্যবেক্ষক','The Watchful, The Observer'],
+['Al-Mujīb','ٱلْمُجِيبُ','আল-মুজীব','দোয়া কবুলকারী','The Responsive, The Answerer'],
+['Al-Wāsiʿ','ٱلْوَاسِعُ','আল-ওয়াসি’','বিস্তৃত, সর্বব্যাপী','The Vast, The All-Encompassing'],
+['Al-Ḥakīm','ٱلْحَكِيمُ','আল-হাকীম','প্রজ্ঞাবান','The Most Wise'],
+['Al-Wadūd','ٱلْوَدُودُ','আল-ওদুদ','অতি স্নেহশীল','The Most Loving, The Affectionate'],
+['Al-Majīd','ٱلْمَجِيدُ','আল-মাজীদ','মহিমান্বিত, সম্মানিত','The Most Glorious, The Illustrious'],
+['Al-Bāʿiṯ','ٱلْبَاعِثُ','আল-বায়িস','পুনরুত্থানদাতা','The Resurrector, The Awakener'],
+['Ash-Shahīd','ٱلشَّهِيدُ','আশ-শাহীদ','সর্বসাক্ষী','The Witness, The Testifier'],
+['Al-Ḥaqq','ٱلْحَقُّ','আল-হাক্ক','সত্য ও প্রকৃত','The Absolute Truth, The Reality'],
+['Al-Wakīl','ٱلْوَكِيلُ','আল-ওকীল','নির্ভরযোগ্য পৃষ্ঠপোষক','The Trustee, The Guardian'],
+['Al-Qawiyy','ٱلْقَوِيُّ','আল-কাবীয়্য','পরাক্রমশালী','The All-Strong'],
+['Al-Matīn','ٱلْمَتِينُ','আল-মাতীন','দৃঢ় ও অটল','The Firm, The Steadfast'],
+['Al-Waliyy','ٱلْوَلِيُّ','আল-ওয়ালিয়্য','বন্ধু ও অভিভাবক','The Protecting Friend, The Helper'],
+['Al-Ḥamīd','ٱلْحَمِيدُ','আল-হামীদ','সকল প্রশংসার যোগ্য','The All-Praiseworthy'],
+['Al-Muḥsī','ٱلْمُحْصِىُ','আল-মুহসী','গণক, পরিমাপকারী','The Accounter, The Numberer'],
+['Al-Mubdiʾ','ٱلْمُبْدِئُ','আল-মুবদি’','সূচনাকারী, উদ্ভাবক','The Originator, The Initiator'],
+['Al-Muʿīd','ٱلْمُعِيدُ','আল-মু’ঈদ','পুনরুদ্ধারকারী','The Restorer, The Reinstate'],
+['Al-Muḥyī','ٱلْمُحْيِي','আল-মুহ্‌য়ী','জীবনদাতা','The Giver of Life'],
+['Al-Mumīt','ٱلْمُمِيتُ','আল-মুমীত','মৃত্যুদাতা','The Bringer of Death'],
+['Al-Ḥayy','ٱلْحَىُّ','আল-হায়্য','চিরজীবী','The Ever-Living'],
+['Al-Qayyūm','ٱلْقَيُّومُ','আল-কাইয়্যুম','স্বয়ংস্থিত, নিজেই সমর্থ','The Self-Subsisting, The Sustainer'],
+['Al-Wājid','ٱلْوَاجِدُ','আল-ওয়াজিদ','পাওয়া যায় এমন, লাভকারী','The Perceiver, The Finder'],
+['Al-Mājid','ٱلْمَاجِدُ','আল-মাজিদ','মহিমাময়, সম্মানজনক','The Illustrious, The Magnificent'],
+['Al-Wāḥid','ٱلْوَاحِدُ','আল-ওয়াহিদ','একক, অদ্বিতীয়','The One, The Unique'],
+['Al-ʾAḥad','ٱلْأَحَدُ','আল-আহাদ','সম্পূর্ণ একক, অবিভাজ্য','The One, The Indivisible'],
+['Aṣ-Ṣamad','ٱلصَّمَدُ','আস-সামাদ','চিরস্থায়ী, সর্বনির্ভর','The Eternal Refuge, The Self-Sufficient'],
+['Al-Qādir','ٱلْقَادِرُ','আল-কাদির','সর্বশক্তিমান','The All-Powerful'],
+['Al-Muqtadir','ٱلْمُقْتَدِرُ','আল-মুকতাদির','সর্ব-নির্ধারক, প্রবল','The All-Dominant, The Determiner'],
+['Al-Muqaddim','ٱلْمُقَدِّمُ','আল-মুকাদ্দিম','অগ্রসারক, এগিয়ে আনারকারী','The Expediter, He Who Brings Forward'],
+['Al-Muʾakhkhir','ٱلْمُؤَخِّرُ','আল-মুআখখির','বিলম্বকারী, পশ্চাদসারক','The Delayer, He Who Puts Far Away'],
+['Al-ʾAwwal','ٱلْأَوَّلُ','আল-আওয়াল','প্রথম, আদিহীন','The First, The Beginning-less'],
+['Al-ʾĀkhir','اَلْآخِرُ','আল-আখির','শেষ, চিরন্তন','The Last, The Endless'],
+['Aẓ-Ẓāhir','ٱلظَّاهِرُ','আয-যাহির','প্রকাশিত, বাহ্য','The Manifest, The Evident'],
+['Al-Bāṭin','ٱلْبَاطِنُ','আল-বাতিন','গোপন, অন্তর্নিহিত','The Hidden, The Inner'],
+['Al-Wali','ٱلْوَالِي','আল-ওয়ালি','পৃষ্ঠপোষক, শাসনকর্তা','The Patron, The Governing Lord'],
+['Al-Mutaʿālī','ٱلْمُتَعَالِي','আল-মুতা’আলি','সর্বোচ্চ মহিমান্বিত','The Supremely Exalted'],
+['Al-Barr','ٱلْبَرُّ','আল-বার্র','উপকারী, দয়ার উৎস','The Source of Goodness, The Beneficent'],
+['At-Tawwāb','ٱلتَّوَّابُ','আত-তাওয়াব','অনুতপ্ত গ্রহণকারী','The Ever-Accepting of Repentance'],
+['Al-Muntaqim','ٱلْمُنْتَقِمُ','আল-মুনতাকিম','অত্যাচারীর প্রতিশোধী','The Avenger of the Wrong'],
+['Al-ʿAfuww','اَلْعَفُوُّ','আল-আফুয়্য','ক্ষমাকারী, মুছে দেয় এমন','The Pardoner, The Effacer'],
+['Ar-Raʾūf','اَلرَّؤُوفُ','আর-রআফ','অতি সদয়, করুণাময়','The Very Kind, The Compassionate'],
+['Mālik al-Mulk','مَـٰلِكُ ٱلْمُلْكِ','মালিকুল মুলক','রাজ্যের স্বামী','The Owner of All Sovereignty'],
+['Ḏhū l-Jalāli wa-l-ʾIkrām','ذُو ٱلْجَلَالِ وَٱلْإِكْرَامِ','যুল জালালি ওয়াল ইকরাম','মহিমা ও সম্মানের ধনী','The Lord of Majesty and Honour'],
+['Al-Muqsiṭ','اَلْمُقْسِطُ','আল-মুকসিত','ন্যায়পরায়ণ, সুষম বিচারকারী','The Equitable, The Just'],
+['Al-Jāmiʿ','اَلْجَامِعُ','আল-জামি’','সমবেতকারী, ঐক্য সাধনকারী','The Gatherer, The Unifier'],
+['Al-Ghāniyy','ٱلْغَنِيُّ','আল-গানিয়্য','অভাবহীন, স্বয়ংসম্পন্ন','The Self-Sufficient, The Rich'],
+['Al-Mughniyy','اَلْمُغْنِيُّ','আল-মুগনিয়্য','সমৃদ্ধকারী, মুক্তিদাতা','The Enricher, The Emancipator'],
+['Al-Māniʿ','اَلْمَانِعُ','আল-মানি’','প্রতিরোধক, বাধাদাতা','The Preventer, The Withholder'],
+['Aḍ-Ḍār','اَلضَّارُ','আয-যার','পরীক্ষার জন্য ক্ষতিকর','The Distressor, The Harm-Bringer'],
+['An-Nāfiʿ','اَلنَّافِعُ','আন-নাফি’','উপকারী, কল্যাণকারী','The Benefactor, The Source of Good'],
+['An-Nūr','اَلنُّورُ','আন-নূর','আলো','The Light'],
+['Al-Hādī','اَلْهَادِي','আল-হাদি','পথপ্রদর্শক','The Guide, The Way'],
+['Al-Badīʿ','اَلْبَدِيعُ','আল-বদী’','অনন্য সৃষ্টিকর্তা, অতুলনীয়','The Originator, The Incomparable'],
+['Al-Bāqī','اَلْبَاقِي','আল-বাকি','চিরস্থায়ী, অনন্ত','The Everlasting, The Infinite'],
+['Al-Wāriṯ','اَلْوَارِثُ','আল-ওয়ারিস','উত্তরাধিকারী','The Heir, The Inheritor of All'],
+['Ar-Rashīd','اَلرَّشِيدُ','আর-রশীদ','সঠিক পথের পথপ্রদর্শক','The Guide to the Right Path'],
+['Aṣ-Ṣabūr','اَلصَّبُورُ','আস-সাবুর','অত্যন্ত ধৈর্যশীল','The Patient, The Timeless'],
 ];
 
-const N = D.length;                 // 99
+const N = D.length;
 const STEP = 360 / N;
 const dial = document.getElementById('dial');
 const wheel = document.getElementById('wheel');
 const ticksBox = document.getElementById('ticks');
 const nm = document.getElementById('nm');
 const mn = document.getElementById('mn');
-const mnBn = document.getElementById('mnBn');
 const autoPlayBtn = document.getElementById('autoPlayBtn');
 const autoStatus = document.getElementById('autoStatus');
 const stressVal = document.getElementById('stressVal');
 const stressFill = document.getElementById('stressFill');
 
-let rot = 0;                        // current wheel rotation (deg)
-let current = 3;                    // default : Al-Quddus (as in the reference)
-let audio = null;
-let autoPlaying = false;
-let autoCount = 0;
-let autoTimer = null;
-let autoRun = 0;
-
-/* ─── persistence : which names have been heard ─── */
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
 };
-/* validate persisted indices so corrupt storage cannot break the dial */
+let LANG = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
+const fmt = n => LANG === 'bn' ? String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[+d]) : String(n);
+const localize = (bn, en) => LANG === 'bn' ? bn : en;
+
+let rot = 0;
+let current = 3;                    // Al-Quddūs
+let speech = null;
+let autoPlaying = false;
+let autoCount = 0;
+let autoTimer = null;
+let autoRun = 0;
+let playbackRun = 0;
+
+/* ─── persistence: which names have been heard ─── */
 const savedHeard = store.get('dial-heard', []);
 let heard = new Set(
   (Array.isArray(savedHeard) ? savedHeard : [])
@@ -138,10 +141,10 @@ let heard = new Set(
 );
 
 function paintStress() {
-  const stress = Math.max(0, N - heard.size);
-  stressVal.textContent = stress;
-  stressFill.style.width = (stress / N) * 100 + '%';
-  stressFill.classList.toggle('zen', stress === 0);
+  const remaining = Math.max(0, N - heard.size);
+  stressVal.textContent = fmt(remaining);
+  stressFill.style.width = (remaining / N) * 100 + '%';
+  stressFill.classList.toggle('zen', remaining === 0);
 }
 
 /* ─── build labels + ticks ─── */
@@ -151,9 +154,9 @@ for (let i = 0; i < N; i++) {
   b.className = 'lbl';
   b.type = 'button';
   b.dataset.i = i;
-  b.lang = 'en';
   b.dir = 'ltr';
-  b.textContent = D[i][0];
+  b.textContent = LANG === 'bn' ? D[i][2] : D[i][0];
+  b.lang = LANG;
   b.addEventListener('click', ev => { ev.stopPropagation(); select(i, false); });
   wheel.appendChild(b);
   labels.push(b);
@@ -165,12 +168,11 @@ for (let i = 0; i < N; i++) {
 
 function layout() {
   const size = dial.clientWidth;
-  const Rl = size * 0.415;          // label radius
-  const Rt = size * 0.478;          // tick radius
+  const Rl = size * 0.415;
+  const Rt = size * 0.478;
   labels.forEach((el, i) => {
     const angle = i * STEP;
-    const r = (i % 2 === 0) ? Rl : Rl - size * 0.055;   // two staggered rows
-    // Lay each label along a radius, with its center pinned to the ring.
+    const r = (i % 2 === 0) ? Rl : Rl - size * 0.055;
     el.style.transform =
       `rotate(${angle}deg) translateY(${-r}px) rotate(-90deg) translate(-50%,-50%)`;
   });
@@ -189,19 +191,27 @@ function applyRotation(duration) {
 }
 
 function paintName() {
-  const [transliteration, , b, e] = D[current];
-  nm.textContent = transliteration;
-  mn.textContent = e;
-  mnBn.textContent = b;
-  labels.forEach((el, i) => el.classList.toggle('on', i === current));
+  const name = D[current];
+  nm.textContent = LANG === 'bn' ? name[2] : name[0];
+  nm.lang = LANG;
+  mn.textContent = LANG === 'bn' ? name[3] : name[4];
+  mn.lang = LANG;
+  labels.forEach((el, i) => {
+    el.textContent = LANG === 'bn' ? D[i][2] : D[i][0];
+    el.lang = LANG;
+    el.setAttribute('aria-label', LANG === 'bn'
+      ? `নাম ${fmt(i + 1)}: ${D[i][2]}`
+      : `Name ${i + 1}: ${D[i][0]}`);
+    el.classList.toggle('on', i === current);
+  });
 }
 
-/* ─── sound ─── */
+/* ─── speech in the selected site language ─── */
 function stopCurrentPlayback() {
-  if (audio) {
-    audio.onplaying = audio.onended = audio.onerror = null;
-    audio.pause();
-    audio = null;
+  playbackRun++;
+  if (speech) {
+    speech.onstart = speech.onend = speech.onerror = null;
+    speech = null;
   }
   if ('speechSynthesis' in window) {
     try { window.speechSynthesis.cancel(); } catch {}
@@ -210,42 +220,53 @@ function stopCurrentPlayback() {
 
 function playName(i, onComplete = null) {
   stopCurrentPlayback();
-  const url = `assets/audio/names/n${String(i + 1).padStart(2, '0')}.mp3`;
-  const clip = new Audio(url);
-  audio = clip;
+  const run = playbackRun;
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    autoStatus.textContent = localize(
+      'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই',
+      'Speech is unavailable in this browser'
+    );
+    if (onComplete) onComplete();
+    return;
+  }
+
+  const text = LANG === 'bn' ? D[i][2] : D[i][0];
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = LANG === 'bn' ? 'bn-BD' : 'en-US';
+  utterance.rate = .85;
+  utterance.pitch = 1;
+  speech = utterance;
   let finished = false;
-  let fallbackStarted = false;
   const finish = () => {
-    if (finished) return;
+    if (finished || run !== playbackRun) return;
     finished = true;
-    if (audio === clip) audio = null;
+    if (speech === utterance) speech = null;
     if (onComplete) onComplete();
   };
-  clip.onplaying = () => {
-    markHeard(i);
+  utterance.onstart = () => { if (run === playbackRun) markHeard(i); };
+  utterance.onend = finish;
+  const fail = () => {
+    if (finished || run !== playbackRun) return;
+    finished = true;
+    if (autoPlaying) {
+      stopAutoPlay(localize('কণ্ঠস্বর চালানো যায়নি। ব্রাউজারের ভাষা-সুবিধা পরীক্ষা করুন।', 'Speech failed. Check your browser voice support.'), true);
+    } else {
+      autoStatus.textContent = localize('কণ্ঠস্বর চালানো যায়নি।', 'Speech could not be played.');
+      stopCurrentPlayback();
+    }
   };
-  clip.onended = finish;
-  clip.onerror = () => {
-    if (finished || fallbackStarted) return;
-    fallbackStarted = true;
-    if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
-      try {
-        const utterance = new SpeechSynthesisUtterance(D[i][1]);
-        utterance.lang = 'ar-SA'; utterance.rate = .8;
-        utterance.onend = finish; utterance.onerror = finish;
-        const voices = window.speechSynthesis.getVoices?.() || [];
-        const arabicVoice = voices.find(v => /^ar(?:[-_]|$)/i.test(v.lang || ''));
-        if (arabicVoice) {
-          utterance.voice = arabicVoice;
-          utterance.lang = arabicVoice.lang.replace('_', '-');
-        }
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
-        markHeard(i);
-      } catch { finish(); }
-    } else finish();
-  };
-  clip.play().catch(() => { if (clip.onerror) clip.onerror(); });
+  utterance.onerror = fail;
+
+  try {
+    const prefix = LANG;
+    const voice = (window.speechSynthesis.getVoices?.() || [])
+      .find(v => (v.lang || '').replace('_', '-').toLowerCase().startsWith(prefix));
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang.replace('_', '-');
+    }
+    window.speechSynthesis.speak(utterance);
+  } catch { fail(); }
 }
 
 function markHeard(i) {
@@ -258,12 +279,13 @@ function markHeard(i) {
 
 /* ─── select a name (spin the wheel so it lands under the needle) ─── */
 function select(i, spin, fromAuto = false, advanceAuto = false) {
-  if (autoPlaying && !fromAuto) stopAutoPlay('Auto play stopped.', true);
+  if (autoPlaying && !fromAuto) {
+    stopAutoPlay(localize('স্বয়ংক্রিয় চালনা থামানো হয়েছে।', 'Auto play stopped.'), true);
+  }
   current = ((i % N) + N) % N;
   let delta = 0;
 
   if (fromAuto && advanceAuto) {
-    // Move one name per step instead of spinning almost a full revolution.
     rot -= STEP;
   } else {
     const desired = -current * STEP;
@@ -278,6 +300,11 @@ function select(i, spin, fromAuto = false, advanceAuto = false) {
   if (!fromAuto) playName(current);
 }
 
+function autoButtonLabel(playing = autoPlaying) {
+  return playing
+    ? localize('■ স্বয়ংক্রিয় চালনা থামান', '■ Stop Auto Play')
+    : localize('▶ ৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', '▶ Auto Play 99 Names');
+}
 function stopAutoPlay(message, cancelMedia = false) {
   autoPlaying = false;
   autoRun++;
@@ -286,15 +313,18 @@ function stopAutoPlay(message, cancelMedia = false) {
     autoTimer = null;
   }
   if (cancelMedia) stopCurrentPlayback();
-  autoPlayBtn.textContent = '▶ Auto Play 99 Names';
+  autoPlayBtn.textContent = autoButtonLabel(false);
   autoPlayBtn.setAttribute('aria-pressed', 'false');
+  autoPlayBtn.setAttribute('aria-label', localize('৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names'));
   if (message) autoStatus.textContent = message;
 }
 
 function playAutoStep(i, run, advance = false) {
   if (!autoPlaying || run !== autoRun) return;
   select(i, false, true, advance);
-  autoStatus.textContent = `Playing ${autoCount + 1} of ${N} — ${D[current][0]}`;
+  autoStatus.textContent = LANG === 'bn'
+    ? `${fmt(autoCount + 1)} / ${fmt(N)} — ${D[current][2]} শোনা হচ্ছে`
+    : `Playing ${autoCount + 1} of ${N} — ${D[current][0]}`;
   playName(current, () => {
     if (!autoPlaying || run !== autoRun) return;
     autoCount++;
@@ -303,7 +333,7 @@ function playAutoStep(i, run, advance = false) {
       store.set('dial-heard', []);
       paintStress();
       autoCount = 0;
-      stopAutoPlay('Finished playing all 99 names. Progress reset.');
+      stopAutoPlay(localize('সব ৯৯টি নাম শোনা হয়েছে। অগ্রগতি রিসেট হয়েছে।', 'Finished all 99 names. Progress reset.'));
       return;
     }
     autoTimer = setTimeout(() => {
@@ -314,18 +344,68 @@ function playAutoStep(i, run, advance = false) {
 }
 
 function startAutoPlay() {
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    autoStatus.textContent = localize(
+      'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই',
+      'Speech is unavailable in this browser'
+    );
+    return;
+  }
   stopCurrentPlayback();
   autoPlaying = true;
   autoCount = 0;
   const run = ++autoRun;
-  autoPlayBtn.textContent = '■ Stop Auto Play';
+  autoPlayBtn.textContent = autoButtonLabel(true);
   autoPlayBtn.setAttribute('aria-pressed', 'true');
+  autoPlayBtn.setAttribute('aria-label', localize('স্বয়ংক্রিয় চালনা থামান', 'Stop auto play'));
   playAutoStep(current, run);
 }
 
 autoPlayBtn.addEventListener('click', () => {
-  if (autoPlaying) stopAutoPlay('Auto play stopped.', true);
+  if (autoPlaying) stopAutoPlay(localize('স্বয়ংক্রিয় চালনা থামানো হয়েছে।', 'Auto play stopped.'), true);
   else startAutoPlay();
+});
+
+function applyLang() {
+  document.documentElement.lang = LANG;
+  document.documentElement.dataset.lang = LANG;
+  document.title = localize('আল্লাহর ৯৯টি সুন্দর নাম · ডায়াল', '99 Names of Allah — The Dial');
+  document.getElementById('pageDescription').content = localize(
+    'আল্লাহর ৯৯টি সুন্দর নাম, বাংলা উচ্চারণ ও অর্থসহ ইন্টার‌্যাকটিভ ডায়াল।',
+    'An interactive dial of the 99 Beautiful Names of Allah, with English transliteration and meanings.'
+  );
+  document.querySelector('.site-nav').setAttribute('aria-label', localize('সাইট নেভিগেশন', 'Site navigation'));
+  document.querySelector('.lang-toggle').setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language'));
+  document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.ui === LANG));
+  wheel.setAttribute('aria-label', localize('৯৯টি নামের ডায়াল', '99-name clock face'));
+  autoPlayBtn.textContent = autoButtonLabel();
+  autoPlayBtn.setAttribute('aria-pressed', autoPlaying ? 'true' : 'false');
+  autoPlayBtn.setAttribute('aria-label', autoPlaying
+    ? localize('স্বয়ংক্রিয় চালনা থামান', 'Stop auto play')
+    : localize('৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names'));
+  if (!autoPlaying) autoStatus.textContent = localize('নির্বাচিত নাম থেকে শুরু হবে', 'Starts from the selected name');
+  paintName();
+  paintStress();
+  store.set('asma-lang', LANG);
+}
+
+function setLanguage(next) {
+  next = next === 'en' ? 'en' : 'bn';
+  if (next === LANG) return;
+  LANG = next;
+  if (autoPlaying) {
+    stopAutoPlay(localize('ভাষা পরিবর্তিত হয়েছে — স্বয়ংক্রিয় চালনা থামানো হয়েছে।', 'Language changed — auto play stopped.'), true);
+  } else stopCurrentPlayback();
+  applyLang();
+}
+
+document.querySelectorAll('.lang-toggle button').forEach(b => {
+  b.addEventListener('click', () => setLanguage(b.dataset.ui));
+});
+window.addEventListener('storage', e => {
+  if (e.key !== 'asma-lang') return;
+  const nextLang = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
+  if (nextLang !== LANG) setLanguage(nextLang);
 });
 
 /* wheel background click = random spin */
@@ -341,7 +421,7 @@ document.addEventListener('keydown', e => {
 /* ─── boot ─── */
 layout();
 let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
-rot = -current * STEP;      // park Al-Quddus under the needle, as in the reference
+rot = -current * STEP;
 applyRotation(0);
-paintName();
-paintStress();
+applyLang();
+if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
