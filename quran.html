@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Al Quran · IlmHub</title>
+<link rel="icon" type="image/svg+xml" href="assets/img/ilmhub-icon.svg" />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Hind+Siliguri:wght@400;500&family=Marcellus&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="quran.css" />
+</head>
+<body>
+<header class="reader-header"><a class="brand" href="index.html"><img class="brand-mark" src="assets/img/ilmhub-icon.svg" alt="" /> IlmHub</a><a href="index.html">← Home / হোম</a></header>
+<main>
+<div class="reader-intro"><p>READ · REFLECT · REMEMBER</p><h1>Al Quran <span lang="ar" dir="rtl">القرآن الكريم</span></h1><p lang="bn">পবিত্র কুরআন — বইয়ের পাতায় পড়ুন</p></div>
+<div class="reader-controls"><label for="surah">Surah / সূরা</label><select id="surah" disabled><option>Loading…</option></select><label for="size">Text size</label><select id="size"><option value="27">Small</option><option value="33" selected>Medium</option><option value="40">Large</option></select></div>
+<p id="status" role="status">Loading Quran text…</p><button id="retry" type="button" hidden>Retry loading</button>
+<section class="book" aria-label="Quran reading spread" aria-busy="true"><article class="leaf" id="rightPage" lang="ar" dir="rtl"></article><article class="leaf" id="leftPage" lang="ar" dir="rtl"></article></section>
+<nav class="page-controls" aria-label="Reading navigation"><button id="previous" type="button" disabled>← Previous</button><span id="progress"></span><button id="next" type="button" disabled>Next →</button></nav>
+<p class="reader-note">Reading spreads are not traditional Mushaf page numbers.</p>
+</main>
+<footer class="reader-note">Arabic text: <a href="https://github.com/risan/quran-json">quran-json</a> · <a href="assets/quran/LICENSE.txt">CC BY-SA 4.0</a> · <a href="assets/quran/README.md">Source &amp; attribution</a></footer>
+<script src="quran.js"></script>
+</body>
+</html>
