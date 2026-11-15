@@ -112,4 +112,4 @@ Research references: [Dr. Tareq Al-Suwaidan, Arabic explanations and discussion 
 
 ## Review requested
 
-Please review the Arabic wording and the list difference noted above. Nothing has been added to the site or used for speech. Reply with corrections by entry number, or approve the draft before I integrate it.
+Please review the Arabic wording and the list difference noted above. These Arabic draft glosses have not been added to the site or used for speech; English/Bangla playback uses the existing site meanings. Reply with corrections by entry number, or approve the draft before I integrate it.
