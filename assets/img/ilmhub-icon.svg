@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">IlmHub open book and star</title>
+  <circle cx="32" cy="32" r="30" fill="#06231a" stroke="#e6c476" stroke-width="2"/>
+  <path d="M32 24.5c-6.3-5-14-6.3-22-4.6v23.1c8-1.7 15.7-.1 22 5.1m0-23.1c6.3-5 14-6.3 22-4.6v23.1c-8-1.7-15.7-.1-22 5.1" fill="none" stroke="#e6c476" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"/>
+  <path d="M32 24.5v23.6M15.8 27.2c4.3-.7 8.5.2 12.3 2.1m-12.3 3.5c4.3-.7 8.5.2 12.3 2.1m20.1-7.7c-4.3-.7-8.5.2-12.3 2.1m12.3 3.5c-4.3-.7-8.5.2-12.3 2.1" fill="none" stroke="#e6c476" stroke-linecap="round" stroke-width="1.7"/>
+  <path d="m32 8.9 1.7 3.3 3.7.5-2.7 2.6.6 3.6-3.3-1.7-3.3 1.7.6-3.6-2.7-2.6 3.7-.5z" fill="#f8e3a8"/>
+</svg>
