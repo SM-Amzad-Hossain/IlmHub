@@ -23,6 +23,7 @@ let LANG = store.get('asma-lang', 'bn') === 'en' ? 'en' : 'bn';
 const fmt = n => (LANG === 'bn' ? toBn(n) : String(n));
 const localize = (bn, en) => LANG === 'bn' ? bn : en;
 let NAME_VOICE = store.get('asma-name-voice', 'male') === 'female' ? 'female' : 'male';
+let nameAudio = null;
 let allIdx = -1, lastList = [], allList = [];
 
 /* toast */
@@ -439,7 +440,6 @@ function openName(i, silent) {
 function closeName() {
   modal.hidden = true;
   document.body.style.overflow = '';
-  window.IlmHubNameSpeech?.cancel();
 }
 grid.addEventListener('click', e => {
   const c = e.target.closest('.name-card');
@@ -459,41 +459,58 @@ $('#mFav').addEventListener('click', () => {
     : (LANG === 'bn' ? '☆ পছন্দের তালিকা থেকে সরানো হলো' : '☆ Removed from favourites'));
 });
 
-/* Browser speech speaks the name and its meaning in the current site language. */
-function speak(text, lang = (LANG === 'bn' ? 'bn-BD' : 'en-US'), onend, onerror) {
-  if (!onend && allIdx >= 0) stopAll(true); // manual speech interrupts “play all”
-  let failed = false;
-  const fail = error => {
-    if (failed) return;
-    failed = true;
-    if (typeof onerror === 'function') onerror(error);
-    else toast(LANG === 'bn' ? 'এই ভাষায় ব্রাউজারের কণ্ঠস্বর পাওয়া যায়নি' : 'Browser speech is unavailable for this language');
-  };
-  let started = false;
+/* speak a name (Web Speech API) */
+function speak(text, lang = (LANG === 'bn' ? 'bn-BD' : 'en-US'), onend) {
+  if (!onend && allIdx >= 0) { try { stopAll(true); } catch {} }   // manual speech interrupts “play all”
+  if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+    toast(LANG === 'bn' ? 'এই ব্রাউজারে কণ্ঠস্বর সুবিধা নেই' : 'Speech is unavailable in this browser');
+    if (onend) onend();
+    return;
+  }
   try {
-    started = window.IlmHubNameSpeech?.speak(text, {
-      lang,
-      gender: NAME_VOICE,
-      rate: .84,
-      onend,
-      onerror: fail
-    }) === true;
-  } catch (error) { fail(error); }
-  if (!started) fail();
-  return started;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/[ʿʾʼ]/g, '').replace(/-/g, ' ').trim());
+    u.lang = lang; u.rate = .85; u.pitch = 1;
+    const prefix = lang.replace('_', '-').slice(0, 2).toLowerCase();
+    const vs = speechSynthesis.getVoices?.() || [];
+    const v = vs.find(v => v.lang.replace('_', '-').toLowerCase().startsWith(prefix));
+    if (v) { u.voice = v; u.lang = v.lang.replace('_', '-'); }
+    if (onend) { u.onend = () => onend(); u.onerror = () => onend(); }
+    speechSynthesis.speak(u);
+  } catch { if (onend) onend(); }
 }
 
+/* Arabic human recordings for each name; no synthetic-voice fallback. */
+function stopNameAudio() {
+  if (!nameAudio) return;
+  nameAudio.onended = nameAudio.onerror = null;
+  try { nameAudio.pause(); nameAudio.removeAttribute('src'); } catch {}
+  nameAudio = null;
+}
 function sayNameSpeak(i, onend) {
   if (!onend && allIdx >= 0) stopAll(true);
-  const n = NAMES[i];
-  const text = LANG === 'bn' ? `${n.b}। ${n.bn}` : `${n.t}. ${n.e}`;
-  const lang = LANG === 'bn' ? 'bn-BD' : 'en-US';
-  return speak(text, lang, onend, () => {
-    if (onend && allIdx >= 0) stopAll(true);
-    toast(LANG === 'bn'
-      ? 'এই ভাষার কণ্ঠ আপনার ব্রাউজার বা ডিভাইসে পাওয়া যায়নি।'
-      : 'No speech voice for this language is available in your browser or device.');
-  });
+  stopNameAudio();
+  const clip = new Audio(`assets/audio/names/${NAME_VOICE}/n${String(i + 1).padStart(2, '0')}.mp3`);
+  nameAudio = clip;
+  let finished = false;
+  const finish = ok => {
+    if (finished || nameAudio !== clip) return;
+    finished = true;
+    nameAudio = null;
+    if (!ok) {
+      const message = localize(
+        'এই কণ্ঠের স্থানীয় রেকর্ডিং নেই। বাহ্যিক উৎসে নাম ও কণ্ঠ বেছে শুনুন।',
+        'No local clip is available for this voice. Open the external source and choose the name and voice there.'
+      );
+      if (allIdx >= 0) stopAll(true);
+      toast(message);
+      return;
+    }
+    if (onend) onend();
+  };
+  clip.onended = () => finish(true);
+  clip.onerror = () => finish(false);
+  clip.play().catch(() => finish(false));
 }
 $('#mSpeak').addEventListener('click', () => sayNameSpeak(current));
 
@@ -600,22 +617,14 @@ paintTasbih();
    🌐 SITE LANGUAGE + Arabic name-voice selection
    ═══════════════════════════════════════════════════════════ */
 function syncNameVoiceControl() {
-  $$('.voice-toggle').forEach(group => group.setAttribute('aria-label', localize('ডিভাইসে উপলব্ধ কণ্ঠের পছন্দ', 'Device voice preference')));
+  $$('.voice-toggle').forEach(group => group.setAttribute('aria-label', localize('আরবি নামের কণ্ঠস্বর', 'Arabic name voice')));
   $$('.voice-toggle button').forEach(button => {
     const active = button.dataset.voice === NAME_VOICE;
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
     button.setAttribute('aria-label', button.dataset.voice === 'female'
-      ? localize('সম্ভব হলে নারী কণ্ঠ', 'Female voice when available')
-      : localize('সম্ভব হলে পুরুষ কণ্ঠ', 'Male voice when available'));
-  });
-}
-function syncAudioLanguageLabel() {
-  const label = $('#audioLanguageLabel');
-  if (label) label.textContent = LANG === 'bn' ? 'বাংলা · সাইটের ভাষা' : 'English · site language';
-  $$('.audio-language-control').forEach(group => group.setAttribute('aria-label', localize('অডিওর ভাষা', 'Audio language')));
-  $$('.audio-language-pending').forEach(button => {
-    button.title = localize('আরবি রেকর্ডিং ও পর্যালোচিত অর্থ এখনও প্রস্তুত নয়', 'Arabic recordings and reviewed meanings are not ready yet');
+      ? localize('নারী কণ্ঠ', 'Female voice')
+      : localize('পুরুষ কণ্ঠ', 'Male voice'));
   });
 }
 function setNameVoice(next, persist = true) {
@@ -623,7 +632,7 @@ function setNameVoice(next, persist = true) {
   if (next === NAME_VOICE) return;
   NAME_VOICE = next;
   if (allIdx >= 0) stopAll(true);
-  else window.IlmHubNameSpeech?.cancel();
+  else stopNameAudio();
   syncNameVoiceControl();
   if (persist) store.set('asma-name-voice', NAME_VOICE);
 }
@@ -640,7 +649,6 @@ function applyLang() {
   $$('.lang-toggle').forEach(group => group.setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language')));
   $$('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.ui === LANG));
   syncNameVoiceControl();
-  syncAudioLanguageLabel();
   $('#search').placeholder = localize(
     'খুঁজুন… যেমন: রহমান / Rahman / merciful',
     'Search… e.g. Rahman / mercy / রহমান'
@@ -665,7 +673,7 @@ function setLanguage(next, notify = false) {
   const time = audio.currentTime && audio.duration ? audio.currentTime : 0;
   const restartNarration = CINE.started && scene >= 1 && scene <= 3;
   LANG = next;
-  window.IlmHubNameSpeech?.cancel();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   if (allIdx >= 0) stopAll(true);
   applyLang();
   if (restartNarration) playSceneFrom(scene, time, wasPlaying);
@@ -693,7 +701,8 @@ const btnStopAll = $('#btnStopAll');
 const nowEl      = $('#playAllNow');
 
 function stopAll(silent) {
-  window.IlmHubNameSpeech?.cancel();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  stopNameAudio();
   allIdx = -1;
   nowEl.textContent = '';
   btnStopAll.hidden = true;
@@ -704,7 +713,7 @@ function playNextName() {
   if (allIdx < 0) return;
   if (allIdx >= allList.length) {
     stopAll(true);
-    toast(LANG === 'bn' ? '✓ ৯৯টি নাম ও অর্থ শেষপর্যন্ত শোনা হয়েছে' : '✓ All 99 names and meanings played');
+    toast(LANG === 'bn' ? '✓ ৯৯টি নাম শেষপর্যন্ত শোনা হয়েছে' : '✓ All 99 names played');
     return;
   }
   const i = allList[allIdx];
@@ -728,4 +737,5 @@ btnStopAll.addEventListener('click', () => stopAll(false));
 
 applyLang();   // apply the saved language on load
 
-/* name-speech.js preloads available device voices; the browser may update them asynchronously. */
+/* voices load async in some browsers */
+if ('speechSynthesis' in window) speechSynthesis.getVoices();

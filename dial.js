@@ -127,6 +127,7 @@ const localize = (bn, en) => LANG === 'bn' ? bn : en;
 
 let rot = 0;
 let current = 3;                    // Al-Quddūs
+let nameAudio = null;
 let autoPlaying = false;
 let autoCount = 0;
 let autoTimer = null;
@@ -206,43 +207,44 @@ function paintName() {
   });
 }
 
-/* Browser speech reads the selected name and meaning in the site language. */
+/* ─── Arabic recordings for the selected male or female voice ─── */
 function stopCurrentPlayback() {
   playbackRun++;
-  window.IlmHubNameSpeech?.cancel();
+  if (!nameAudio) return;
+  nameAudio.onplaying = nameAudio.onended = nameAudio.onerror = null;
+  try { nameAudio.pause(); nameAudio.removeAttribute('src'); } catch {}
+  nameAudio = null;
 }
 
 function playName(i, onComplete = null) {
   stopCurrentPlayback();
   const run = playbackRun;
-  const name = D[i];
-  const text = LANG === 'bn' ? `${name[2]}। ${name[3]}` : `${name[0]}. ${name[4]}`;
-  const lang = LANG === 'bn' ? 'bn-BD' : 'en-US';
+  const clip = new Audio(`assets/audio/names/${NAME_VOICE}/n${String(i + 1).padStart(2, '0')}.mp3`);
+  nameAudio = clip;
   let finished = false;
+  const finish = () => {
+    if (finished || run !== playbackRun) return;
+    finished = true;
+    if (nameAudio === clip) nameAudio = null;
+    if (onComplete) onComplete();
+  };
   const fail = () => {
     if (finished || run !== playbackRun) return;
     finished = true;
     const message = localize(
-      'এই ভাষার কণ্ঠ আপনার ব্রাউজার বা ডিভাইসে পাওয়া যায়নি।',
-      'No speech voice for this language is available in your browser or device.'
+      'এই কণ্ঠের স্থানীয় রেকর্ডিং নেই। বাহ্যিক উৎসে নাম ও কণ্ঠ বেছে শুনুন।',
+      'No local clip is available for this voice. Open the external source and choose the name and voice there.'
     );
     if (autoPlaying) stopAutoPlay(message, true);
-    else autoStatus.textContent = message;
+    else {
+      autoStatus.textContent = message;
+      stopCurrentPlayback();
+    }
   };
-  const finish = () => {
-    if (finished || run !== playbackRun) return;
-    finished = true;
-    markHeard(i);
-    if (onComplete) onComplete();
-  };
-  const started = window.IlmHubNameSpeech?.speak(text, {
-    lang,
-    gender: NAME_VOICE,
-    rate: .84,
-    onend: finish,
-    onerror: fail
-  }) === true;
-  if (!started) fail();
+  clip.onplaying = () => { if (run === playbackRun) markHeard(i); };
+  clip.onended = finish;
+  clip.onerror = fail;
+  clip.play().catch(fail);
 }
 
 function markHeard(i) {
@@ -279,7 +281,7 @@ function select(i, spin, fromAuto = false, advanceAuto = false) {
 function autoButtonLabel(playing = autoPlaying) {
   return playing
     ? localize('■ স্বয়ংক্রিয় চালনা থামান', '■ Stop Auto Play')
-    : localize('▶ ৯৯টি নাম ও অর্থ স্বয়ংক্রিয়ভাবে শুনুন', '▶ Auto Play 99 Names and Meanings');
+    : localize('▶ ৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', '▶ Auto Play 99 Names');
 }
 function stopAutoPlay(message, cancelMedia = false) {
   autoPlaying = false;
@@ -291,7 +293,7 @@ function stopAutoPlay(message, cancelMedia = false) {
   if (cancelMedia) stopCurrentPlayback();
   autoPlayBtn.textContent = autoButtonLabel(false);
   autoPlayBtn.setAttribute('aria-pressed', 'false');
-  autoPlayBtn.setAttribute('aria-label', localize('৯৯টি নাম ও অর্থ স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names and meanings'));
+  autoPlayBtn.setAttribute('aria-label', localize('৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names'));
   if (message) autoStatus.textContent = message;
 }
 
@@ -309,7 +311,7 @@ function playAutoStep(i, run, advance = false) {
       store.set('dial-heard', []);
       paintStress();
       autoCount = 0;
-      stopAutoPlay(localize('সব ৯৯টি নাম ও অর্থ শোনা হয়েছে। অগ্রগতি রিসেট হয়েছে।', 'Finished all 99 names and meanings. Progress reset.'));
+      stopAutoPlay(localize('সব ৯৯টি নাম শোনা হয়েছে। অগ্রগতি রিসেট হয়েছে।', 'Finished all 99 names. Progress reset.'));
       return;
     }
     autoTimer = setTimeout(() => {
@@ -336,22 +338,14 @@ autoPlayBtn.addEventListener('click', () => {
 });
 
 function syncVoiceControls() {
-  document.querySelectorAll('.voice-toggle').forEach(group => group.setAttribute('aria-label', localize('ডিভাইসে উপলব্ধ কণ্ঠের পছন্দ', 'Device voice preference')));
+  document.querySelectorAll('.voice-toggle').forEach(group => group.setAttribute('aria-label', localize('আরবি নামের কণ্ঠস্বর', 'Arabic name voice')));
   document.querySelectorAll('.voice-toggle button').forEach(button => {
     const active = button.dataset.voice === NAME_VOICE;
     button.classList.toggle('active', active);
     button.setAttribute('aria-pressed', String(active));
     button.setAttribute('aria-label', button.dataset.voice === 'female'
-      ? localize('সম্ভব হলে নারী কণ্ঠ', 'Female voice when available')
-      : localize('সম্ভব হলে পুরুষ কণ্ঠ', 'Male voice when available'));
-  });
-}
-function syncAudioLanguageLabel() {
-  const label = document.getElementById('audioLanguageLabel');
-  if (label) label.textContent = LANG === 'bn' ? 'বাংলা · সাইটের ভাষা' : 'English · site language';
-  document.querySelectorAll('.audio-language-control').forEach(group => group.setAttribute('aria-label', localize('অডিওর ভাষা', 'Audio language')));
-  document.querySelectorAll('.audio-language-pending').forEach(button => {
-    button.title = localize('আরবি রেকর্ডিং ও পর্যালোচিত অর্থ এখনও প্রস্তুত নয়', 'Arabic recordings and reviewed meanings are not ready yet');
+      ? localize('নারী কণ্ঠ', 'Female voice')
+      : localize('পুরুষ কণ্ঠ', 'Male voice'));
   });
 }
 function setNameVoice(next, persist = true) {
@@ -376,13 +370,12 @@ function applyLang() {
   document.querySelector('.lang-toggle').setAttribute('aria-label', localize('ওয়েবসাইটের ভাষা', 'Website language'));
   document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.ui === LANG));
   syncVoiceControls();
-  syncAudioLanguageLabel();
   wheel.setAttribute('aria-label', localize('৯৯টি নামের ডায়াল', '99-name clock face'));
   autoPlayBtn.textContent = autoButtonLabel();
   autoPlayBtn.setAttribute('aria-pressed', autoPlaying ? 'true' : 'false');
   autoPlayBtn.setAttribute('aria-label', autoPlaying
     ? localize('স্বয়ংক্রিয় চালনা থামান', 'Stop auto play')
-    : localize('৯৯টি নাম ও অর্থ স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names and meanings'));
+    : localize('৯৯টি নাম স্বয়ংক্রিয়ভাবে শুনুন', 'Auto play all 99 names'));
   if (!autoPlaying) autoStatus.textContent = localize('নির্বাচিত নাম থেকে শুরু হবে', 'Starts from the selected name');
   paintName();
   paintStress();
@@ -432,3 +425,4 @@ let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTime
 rot = -current * STEP;
 applyRotation(0);
 applyLang();
+if ('speechSynthesis' in window) window.speechSynthesis.getVoices();
